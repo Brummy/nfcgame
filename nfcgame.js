@@ -1,7 +1,7 @@
 /* ===============================
    WINNING TAG NUMBERS
 ================================= */
-const winners = ["7", "14", "22", "31"]; // <-- change as needed
+const winners = ["00", "14", "22", "31"]; // <-- change as needed
 
 /* ===============================
    READ TAG FROM URL
