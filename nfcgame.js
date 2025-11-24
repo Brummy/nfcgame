@@ -1,8 +1,7 @@
 /* ===============================
    WINNING TAG NUMBERS
 ================================= */
-const winners = ["00", "14", "22", "31"]; // <-- change as needed
-const ALREADY_SHOWN_KEY = "shown_winners_once";
+const winners = ["7", "14", "22", "31"]; // <-- change as needed
 
 /* ===============================
    READ TAG FROM URL
@@ -10,8 +9,6 @@ const ALREADY_SHOWN_KEY = "shown_winners_once";
 const params = new URLSearchParams(window.location.search);
 const tag = params.get("tag");
 const msg = document.getElementById("message");
-const sidebar = document.getElementById("sidebar");
-const winnerList = document.getElementById("winnerList");
 
 /* ===============================
    LOAD CONFETTI LIBRARY
@@ -53,14 +50,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   if (winners.includes(tag)) {
-    msg.innerHTML = `<div id="winnerText">FREE STEAL!</div>`;
-
+    msg.innerHTML = `<div id="winnerText">Number ${tag}, WINNER!</div>`;
     setTimeout(runConfetti, 300);
-
-    const already = localStorage.getItem(ALREADY_SHOWN_KEY);
-    if (!already) {
-      localStorage.setItem(ALREADY_SHOWN_KEY, "yes");
-    }
 
   } else {
     msg.innerHTML = `
