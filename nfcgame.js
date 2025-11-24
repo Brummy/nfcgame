@@ -1,7 +1,7 @@
 /* ===============================
    WINNING TAG NUMBERS
 ================================= */
-const winners = ["00", "14", "22", "31"]; // <-- change as needed
+const winners = ["7", "14", "22", "31"]; // <-- change as needed
 
 /* ===============================
    READ TAG FROM URL
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     msg.innerHTML = `
       <div class="flashingX">X</div>
-      <div id="loserText">LOSER!</div>
+      <div id="loserText">Number ${tag}, LOSER!</div>
     `;
   }
 });
