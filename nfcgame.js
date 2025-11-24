@@ -9,7 +9,7 @@ const winners = ["00", "14", "22", "31"]; // <-- change as needed
 const params = new URLSearchParams(window.location.search);
 const tag = params.get("tag");
 
-// Hide the ?tag=NUMBER from the URL immediately
+// Hide the ?tag=NUMBER so URL looks clean
 history.replaceState({}, "", window.location.pathname);
 
 const msg = document.getElementById("message");
