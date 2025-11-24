@@ -59,8 +59,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const already = localStorage.getItem(ALREADY_SHOWN_KEY);
     if (!already) {
-      sidebar.style.display = "block";
-      winnerList.innerHTML = winners.map(n => `<div>Tag #${n}</div>`).join("");
       localStorage.setItem(ALREADY_SHOWN_KEY, "yes");
     }
 
