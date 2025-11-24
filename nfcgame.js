@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   if (winners.includes(tag)) {
-    msg.innerHTML = `<div id="winnerText">Number ${tag}, WINNER!</div>`;
+    msg.innerHTML = `<div id="winnerText">Number ${tag}, FREE STEAL!!</div>`;
     setTimeout(runConfetti, 300);
 
   } else {
