@@ -1,75 +1,86 @@
-/* ===============================
-   WINNING TAG NUMBERS
-================================= */
-const winners = ["00", "14", "22", "31"]; // <-- change winners as needed
-
-/* ===============================
-   READ TAG FROM URL
-================================= */
-const params = new URLSearchParams(window.location.search);
-const tag = params.get("tag");
-
-// Hide the ?tag=NUMBER so URL looks clean
-history.replaceState({}, "", window.location.pathname);
-
-const msg = document.getElementById("message");
-
-/* ===============================
-   LOAD CONFETTI LIBRARY
-================================= */
-var confettiScript = document.createElement("script");
-confettiScript.src =
-  "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
-document.head.appendChild(confettiScript);
-
-/* ===============================
-   CONFETTI FUNCTION
-================================= */
-function runConfetti() {
-  const duration = 2500;
-  const end = Date.now() + duration;
-
-  (function frame() {
-    confetti({
-      particleCount: 6,
-      angle: Math.random() * 360,
-      spread: 70,
-      origin: {
-        x: Math.random(),
-        y: Math.random() - 0.2
-      }
-    });
-    if (Date.now() < end) requestAnimationFrame(frame);
-  })();
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f0f0f0;
+  overflow: hidden;
 }
 
-/* ===============================
-   PAGE LOGIC
-================================= */
-document.addEventListener("DOMContentLoaded", function () {
+#main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
 
-  if (!tag) {
-    msg.innerHTML = "<h1>No tag detected.</h1>";
-    return;
-  }
+/* ---------- TAG NUMBER (both winner & loser) ---------- */
+#tagNumber {
+  font-size: 3.2em;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 25px;
+}
 
-  if (winners.includes(tag)) {
+/* ---------- WINNER ---------- */
 
-    // ---------- WINNER SCREEN ----------
-    msg.innerHTML = `
-      <div id="tagNumber">Tag ${tag}</div>
-      <div class="bigCheck">✔</div>
-      <div id="winnerText">WINNER!!</div>
-    `;
-    setTimeout(runConfetti, 300);
+.bigCheck {
+  font-size: 10em;          /* HUGE checkmark */
+  color: green;
+  font-weight: bold;
+  animation: winnerPulse 1s infinite alternate;
+  line-height: 0.8;
+  margin: 0;
+  padding: 0;
+}
 
-  } else {
+#winnerText {
+  font-size: 4em;           /* Big WINNER!! text */
+  font-weight: bold;
+  color: green;
+  margin-top: 25px;
+}
 
-    // ---------- LOSER SCREEN ----------
-    msg.innerHTML = `
-      <div id="tagNumber">Tag ${tag}</div>
-      <div class="flashingX">X</div>
-      <div id="loserText">LOSER!!</div>
-    `;
-  }
-});
+@keyframes winnerPulse {
+  from { transform: scale(1); opacity: 1; }
+  to { transform: scale(1.15); opacity: 0.7; }
+}
+
+/* ---------- LOSER ---------- */
+
+.flashingX {
+  font-size: 12em;          /* Massive flashing X */
+  color: red;
+  font-weight: bold;
+  animation: flash 0.5s infinite alternate;
+  line-height: 0.8;
+  margin: 0;
+  padding: 0;
+}
+
+#loserText {
+  font-size: 4em;           /* Big LOSER!! text */
+  font-weight: bold;
+  color: red;
+  animation: flash 0.7s infinite alternate;
+  margin-top: 25px;
+}
+
+@keyframes flash {
+  from { opacity: 1; }
+  to { opacity: 0.2; }
+}
+
+/* Confetti Canvas */
+#confetti-canvas {
+  position: fixed;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
