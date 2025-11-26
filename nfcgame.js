@@ -54,13 +54,20 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   if (winners.includes(tag)) {
-    msg.innerHTML = `<div id="winnerText">Number ${tag}, FREE STEAL!!</div>`;
+
+    // WINNER SCREEN
+    msg.innerHTML = `
+      <div id="winnerText">Number ${tag}, FREE STEAL!!</div>
+    `;
     setTimeout(runConfetti, 300);
 
   } else {
+
+    // UPDATED LOSER SCREEN (as requested)
     msg.innerHTML = `
+      <div id="tagNumber">Tag ${tag}</div>
       <div class="flashingX">X</div>
-      <div id="loserText">Number ${tag}, LOSER!</div>
+      <div id="loserText">LOSER!!</div>
     `;
   }
 });
