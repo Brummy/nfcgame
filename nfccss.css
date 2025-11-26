@@ -17,17 +17,7 @@ body {
   text-align: center;
 }
 
-/* ---------- WINNER ---------- */
-
-#winnerText {
-  font-size: 3.5em;   /* slightly bigger */
-  font-weight: bold;
-  color: green;
-}
-
-/* ---------- LOSER UPDATES ---------- */
-
-/* Tag number above the X */
+/* ---------- TAG NUMBER (BOTH WINNER & LOSER) ---------- */
 #tagNumber {
   font-size: 3.2em;
   font-weight: bold;
@@ -35,9 +25,34 @@ body {
   margin-bottom: 25px;
 }
 
-/* MUCH larger X for phone screens */
+/* ---------- WINNER ---------- */
+
+.bigCheck {
+  font-size: 10em;
+  color: green;
+  font-weight: bold;
+  animation: winnerPulse 1s infinite alternate;
+  line-height: 0.8;
+  margin: 0;
+  padding: 0;
+}
+
+#winnerText {
+  font-size: 4em;
+  font-weight: bold;
+  color: green;
+  margin-top: 25px;
+}
+
+@keyframes winnerPulse {
+  from { transform: scale(1); opacity: 1; }
+  to { transform: scale(1.15); opacity: 0.7; }
+}
+
+/* ---------- LOSER ---------- */
+
 .flashingX {
-  font-size: 12em;   /* was 8em → now VERY large */
+  font-size: 12em;   /* HUGE */
   color: red;
   font-weight: bold;
   animation: flash 0.5s infinite alternate;
@@ -46,15 +61,15 @@ body {
   padding: 0;
 }
 
-/* Big "LOSER!!" text below the X */
 #loserText {
-  font-size: 4em;    /* bigger than before */
+  font-size: 4em;
   font-weight: bold;
   color: red;
   animation: flash 0.7s infinite alternate;
   margin-top: 25px;
 }
 
+/* Flash animation (for LOSER) */
 @keyframes flash {
   from { opacity: 1; }
   to { opacity: 0.2; }
