@@ -1,7 +1,7 @@
 /* ===============================
    WINNING TAG NUMBERS
 ================================= */
-const winners = ["00", "14", "22", "31"]; // <-- change as needed
+const winners = ["00", "14", "22", "31"]; // <-- change winners as needed
 
 /* ===============================
    READ TAG FROM URL
@@ -9,7 +9,7 @@ const winners = ["00", "14", "22", "31"]; // <-- change as needed
 const params = new URLSearchParams(window.location.search);
 const tag = params.get("tag");
 
-// Hide the ?tag=NUMBER so URL looks clean
+// Hide the ?tag=NUMBER for a clean URL display
 history.replaceState({}, "", window.location.pathname);
 
 const msg = document.getElementById("message");
@@ -55,15 +55,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (winners.includes(tag)) {
 
-    // WINNER SCREEN
+    /* ---------- WINNER SCREEN ---------- */
     msg.innerHTML = `
-      <div id="winnerText">Number ${tag}, FREE STEAL!!</div>
+      <div id="tagNumber">Tag ${tag}</div>
+      <div class="bigCheck">✔</div>
+      <div id="winnerText">WINNER!!</div>
     `;
     setTimeout(runConfetti, 300);
 
   } else {
 
-    // UPDATED LOSER SCREEN (as requested)
+    /* ---------- LOSER SCREEN ---------- */
     msg.innerHTML = `
       <div id="tagNumber">Tag ${tag}</div>
       <div class="flashingX">X</div>
