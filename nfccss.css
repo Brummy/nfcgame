@@ -17,26 +17,42 @@ body {
   text-align: center;
 }
 
-/* Winner / Loser Styles */
+/* ---------- WINNER ---------- */
 
 #winnerText {
-  font-size: 3em;
+  font-size: 3.5em;   /* slightly bigger */
   font-weight: bold;
   color: green;
 }
 
-#loserText {
-  font-size: 3em;
+/* ---------- LOSER UPDATES ---------- */
+
+/* Tag number above the X */
+#tagNumber {
+  font-size: 3.2em;
   font-weight: bold;
-  color: red;
-  animation: flash 0.7s infinite alternate;
+  color: #222;
+  margin-bottom: 25px;
 }
 
+/* MUCH larger X for phone screens */
 .flashingX {
-  font-size: 8em;
+  font-size: 12em;   /* was 8em → now VERY large */
   color: red;
   font-weight: bold;
   animation: flash 0.5s infinite alternate;
+  line-height: 0.8;
+  margin: 0;
+  padding: 0;
+}
+
+/* Big "LOSER!!" text below the X */
+#loserText {
+  font-size: 4em;    /* bigger than before */
+  font-weight: bold;
+  color: red;
+  animation: flash 0.7s infinite alternate;
+  margin-top: 25px;
 }
 
 @keyframes flash {
@@ -45,7 +61,6 @@ body {
 }
 
 /* Confetti Canvas */
-
 #confetti-canvas {
   position: fixed;
   pointer-events: none;
