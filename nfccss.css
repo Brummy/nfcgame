@@ -2,85 +2,98 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
   height: 100vh;
-  background: #f0f0f0;
+  background: #000;
+  color: #fff;
   overflow: hidden;
-}
-
-#main {
-  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
   flex-direction: column;
+  text-align: center;
 }
 
-/* ---------- TAG NUMBER (both winner & loser) ---------- */
-#tagNumber {
-  font-size: 3.2em;
-  font-weight: bold;
-  color: #222;
-  margin-bottom: 25px;
+#countdown {
+  font-size: 14em;
+  font-weight: 900;
+  color: yellow;
+  animation: countdownFlash 0.6s infinite alternate;
+  line-height: 1;
 }
 
-/* ---------- WINNER ---------- */
+@keyframes countdownFlash {
+  from { opacity: 1; } 
+  to { opacity: 0.4; }
+}
 
+/* Winner / Loser elements */
 .bigCheck {
-  font-size: 10em;          /* HUGE checkmark */
-  color: green;
-  font-weight: bold;
-  animation: winnerPulse 1s infinite alternate;
-  line-height: 0.8;
-  margin: 0;
-  padding: 0;
+  font-size: 14em;
+  font-weight: 900;
+  color: #0f0;
+  animation: pulse 0.8s infinite alternate;
+  line-height: 1;
 }
-
-#winnerText {
-  font-size: 4em;           /* Big WINNER!! text */
-  font-weight: bold;
-  color: green;
-  margin-top: 25px;
-}
-
-@keyframes winnerPulse {
-  from { transform: scale(1); opacity: 1; }
-  to { transform: scale(1.15); opacity: 0.7; }
-}
-
-/* ---------- LOSER ---------- */
 
 .flashingX {
-  font-size: 12em;          /* Massive flashing X */
-  color: red;
-  font-weight: bold;
-  animation: flash 0.5s infinite alternate;
-  line-height: 0.8;
-  margin: 0;
-  padding: 0;
+  font-size: 22em;
+  font-weight: 900;
+  color: #f00;
+  animation: flash 0.4s infinite alternate;
+  line-height: 1;
 }
 
-#loserText {
-  font-size: 4em;           /* Big LOSER!! text */
-  font-weight: bold;
-  color: red;
-  animation: flash 0.7s infinite alternate;
-  margin-top: 25px;
+.majorAward {
+  font-size: 10em;
+  font-weight: 900;
+  color: gold;
+  animation: flash 0.5s infinite alternate;
+  line-height: 1;
+  margin-top: 20px;
 }
 
 @keyframes flash {
-  from { opacity: 1; }
-  to { opacity: 0.2; }
+  from { opacity: 1; } to { opacity: 0.2; }
 }
 
-/* Confetti Canvas */
+@keyframes pulse {
+  from { transform: scale(1); opacity: 1; }
+  to { transform: scale(1.18); opacity: 0.8; }
+}
+
+/* Reveal button styling */
+.reveal-btn {
+  font-size: 4.8em; 
+  padding: 20px 50px;
+  border-radius: 2rem;
+  background: white;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+}
+
+#tagNumber {
+  font-size: 4.5em;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+/* Confetti overlay */
 #confetti-canvas {
   position: fixed;
-  pointer-events: none;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  pointer-events: none;
+}
+
+.embedVideo {
+  width: 100vw;
+  height: 30vh;
+  border: none;
+  margin-bottom: 20px;
+  pointer-events: none;
 }
