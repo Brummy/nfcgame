@@ -13,26 +13,48 @@ body {
   text-align: center;
 }
 
+.embedVideo {
+  width: 100vw;
+  height: 28vh;
+  border: none;
+  margin-bottom: 20px;
+  display: block;
+}
+
+/* Countdown full-page */
 #countdown {
   font-size: 14em;
   font-weight: 900;
   color: yellow;
   animation: countdownFlash 0.6s infinite alternate;
   line-height: 1;
+  margin-top: 40px;
 }
 
 @keyframes countdownFlash {
-  from { opacity: 1; } 
+  from { opacity: 1; }
   to { opacity: 0.4; }
 }
 
-/* Winner / Loser elements */
+/* Winner / Loser styling */
 .bigCheck {
   font-size: 14em;
+  color: #0f0;
+  animation: winnerPulse 0.8s infinite alternate;
+  line-height: 1;
+  margin-top: 10px;
+}
+
+@keyframes winnerPulse {
+  from { transform: scale(1); opacity: 1; }
+  to   { transform: scale(1.18); opacity: 0.8; }
+}
+
+#winnerText {
+  font-size: 6em;
   font-weight: 900;
   color: #0f0;
-  animation: pulse 0.8s infinite alternate;
-  line-height: 1;
+  margin-top: 10px;
 }
 
 .flashingX {
@@ -41,59 +63,41 @@ body {
   color: #f00;
   animation: flash 0.4s infinite alternate;
   line-height: 1;
+  margin-top: 0;
 }
 
-.majorAward {
-  font-size: 10em;
+#loserText {
+  font-size: 6em;
   font-weight: 900;
-  color: gold;
+  color: #f00;
   animation: flash 0.5s infinite alternate;
-  line-height: 1;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 @keyframes flash {
-  from { opacity: 1; } to { opacity: 0.2; }
+  from { opacity: 1; }
+  to   { opacity: 0.2; }
 }
 
-@keyframes pulse {
-  from { transform: scale(1); opacity: 1; }
-  to { transform: scale(1.18); opacity: 0.8; }
-}
-
-/* Reveal button styling */
-.reveal-btn {
-  font-size: 4.8em; 
-  padding: 20px 50px;
-  border-radius: 2rem;
-  background: white;
-  color: black;
-  font-weight: bold;
-  cursor: pointer;
-  z-index: 10;
-}
-
-#tagNumber {
-  font-size: 4.5em;
+/* Major Award styling */
+.majorAward {
+  font-size: 8em;
   font-weight: 900;
-  color: #fff;
-  margin-bottom: 20px;
+  color: gold;
+  animation: majorFlash 0.5s infinite alternate;
+  line-height: 1;
+  margin-top: 10px;
 }
 
-/* Confetti overlay */
-#confetti-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+@keyframes majorFlash {
+  from { opacity: 1; }
+  to   { opacity: 0.3; }
 }
 
-.embedVideo {
-  width: 100vw;
-  height: 30vh;
-  border: none;
-  margin-bottom: 20px;
-  pointer-events: none;
+/* Tag number for PC/TV */
+#tagNumber {
+  font-size: 4em;
+  font-weight: 900;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
