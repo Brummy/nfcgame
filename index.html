@@ -5,22 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Texas A&amp;M Innovation - White Elephant 2025</title>
 
+<!-- ✅ If you rename your CSS or JS files, update these names below -->
 <link rel="stylesheet" href="nfccss.css" />
 <script src="nfcgame.js" defer></script>
 
-<!-- Confetti library -->
+<!-- confetti library -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 
 <body>
   <div id="main">
-    <iframe id="resultVideo" class="embedVideo" style="display:none;"></iframe>
 
+    <!-- VIDEO EMBED FRAME (we fill src dynamically in JS) -->
+    <iframe id="resultVideo" class="embedVideo"></iframe>
+    
+    <!-- RESULT MESSAGE OUTPUT -->
     <div id="message"></div>
 
-    <div id="countdown"></div>
+    <!-- COUNTDOWN -->
+    <div id="countdown" style="display:none;"></div>
 
-    <button id="revealBtn" class="reveal-btn">Reveal Result</button>
+    <!-- START/REVEAL BUTTON -->
+    <button id="startBtn">Reveal Result</button>
+
   </div>
 </body>
 </html>
