@@ -42,41 +42,34 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  function playSound(file) {
-    const a = new Audio(file);
-    a.play().catch(()=>{});
-  }
+  function playResultSoundAndVideo(mp3file) {
+  const audio = new Audio(mp3file);
+  audio.play().catch(()=>{});
+}
 
   function runConfetti() {
     confetti({ particleCount: 150, spread: 160, angle: -90, origin: {x:0.5,y:0.25}});
   }
 
   function revealMajor() {
-    msg.innerHTML = `
-      <div class="majorAward">Major Award!</div>
-    `;
-    vid.src = `https://www.youtube.com/embed/${videoMajorID}?autoplay=1&mute=1`;
-    playSound(soundMajor);
-    setTimeout(runConfetti, 200);
-  }
+  msg.innerHTML = `<div id="tagNumber">${tag}</div><div class="majorAward">Major Award!</div>`;
+  vid.src = `https://www.youtube.com/embed/${videoMajorID}?autoplay=1&mute=0`;
+  playResultSoundAndVideo(soundMajor);
+  setTimeout(runConfetti, 200);
+}
 
   function revealWinner() {
-    msg.innerHTML = `
-      <div id="winnerText">Winner!</div>
-    `;
-    vid.src = `https://www.youtube.com/embed/${videoWinnerID}?autoplay=1&mute=1`;
-    playSound(soundWinner);
-    setTimeout(runConfetti, 200);
-  }
+  msg.innerHTML = `<div id="tagNumber">${tag}</div><div class="bigCheck">✔</div><div id="winnerText">WINNER!!</div>`;
+  vid.src = `https://www.youtube.com/embed/${videoWinnerID}?autoplay=1&mute=0`; // <-- unmuted if YouTube is allowed
+  playResultSoundAndVideo(soundWinner);
+  setTimeout(runConfetti, 200);
+}
 
   function revealLoser() {
-    msg.innerHTML = `
-      <div class="flashingX">X</div>
-      <div id="loserText">LOSER!!</div>
-    `;
-    vid.src = `https://www.youtube.com/embed/${videoLoserID}?autoplay=1&mute=1`;
-    playSound(soundLoser);
-  }
+  msg.innerHTML = `<div id="tagNumber">${tag}</div><div class="flashingX">X</div><div id="loserText">LOSER!!</div>`;
+  vid.src = `https://www.youtube.com/embed/${videoLoserID}?autoplay=1&mute=0`;
+  playResultSoundAndVideo(soundLoser);
+}
 
   // Start 3-2-1 countdown when Reveal button pressed
   btn.addEventListener("click", () => {
