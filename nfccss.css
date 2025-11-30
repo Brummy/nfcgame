@@ -2,90 +2,80 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
   height: 100vh;
-  background: black;
-  overflow: hidden;
+  background: #500000; /* TAMU maroon */
   color: white;
+  overflow: hidden;
 }
 
 #main {
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100%;
   text-align: center;
-  width: 100%;
 }
 
-/* Winner / Loser / Prize Styles */
-
-#winnerText {
-  font-size: 2.2rem; /* fits phones */
+/* Countdown */
+#countdown {
+  font-size: 10rem;
   font-weight: 900;
-  color: #00ff00;
-}
-
-#loserText {
-  font-size: 2.2rem;
-  font-weight: 900;
-  color: red;
+  margin-top: 10vh;
   animation: flash 0.6s infinite alternate;
-  margin-top: 1rem;
-  text-transform: uppercase;
+  color: #ffd700;
 }
 
+/* Tag number display */
+#tagLabel {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-top: 5vh;
+}
+
+/* Big X for loser */
 .flashingX {
-  font-size: 12rem; /* huge on phones and TVs */
+  font-size: 18rem;
+  font-weight: 900;
+  margin: 2vh 0;
+  animation: flash 0.5s infinite alternate;
   color: red;
-  font-weight: 900;
-  animation: flash 0.4s infinite alternate;
 }
 
-.nfcTagDisplay {
-  font-size: 2rem;
-  font-weight: 900;
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-}
-
-/* GRAND PRIZE */
-.grand-prize-text {
+/* Winner text */
+#winnerText {
   font-size: 5rem;
   font-weight: 900;
+  margin-top: 2vh;
+  color: #00ff00;
+}
+
+/* Green check */
+.big-check {
+  font-size: 14rem;
+  color: #00ff00;
+  animation: flash 0.4s infinite alternate;
+}
+
+/* Loser text */
+#loserText {
+  font-size: 5rem;
+  font-weight: 900;
+  margin-top: 2vh;
+  color: red;
+  animation: flash 0.7s infinite alternate;
+}
+
+/* Major award */
+.major-award {
+  font-size: 7rem;
+  font-weight: 900;
+  margin-top: 2vh;
   color: gold;
   animation: flash 0.4s infinite alternate;
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-}
-
-.major-award iframe {
-  width: 100vw;
-  max-width: 900px;
-  height: 240px;
-  border: none;
-  border-radius: 12px;
-}
-
-.big-check {
-  font-size: 11rem;
-  font-weight: 900;
-  color: #00ff00;
-  animation: flash 0.5s infinite alternate;
-  margin: 1rem 0;
 }
 
 @keyframes flash {
-  from { opacity: 1; }
-  to   { opacity: 0.3; }
-}
-
-/* Make sure conference displays don't squish */
-@media (min-width: 900px) {
-  #winnerText { font-size: 3.5rem; }
-  #loserText  { font-size: 3.5rem; }
-  .flashingX  { font-size: 20rem; }
-  .big-check  { font-size: 15rem; }
+  from {opacity: 1;}
+  to   {opacity: 0.2;}
 }
