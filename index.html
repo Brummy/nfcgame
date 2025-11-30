@@ -1,46 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>NFC Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NFC Game Page</title>
+
+  <!-- Link to CSS -->
   <link rel="stylesheet" href="style.css">
-
-  <!-- YouTube API for embedding player -->
-  <script src="https://www.youtube.com/iframe_api"></script>
 </head>
+
 <body>
+  <div id="main"></div>
 
-<div class="container">
-
-  <h1>NFC Prize Tap Game</h1>
-
-  <div class="card">
-    <h2>Tap to Scan</h2>
-
-    <div class="scan-box">
-      <p id="status">Bring a programmed NFC tag close to the reader</p>
-      <p id="tagOutput">No tag scanned yet...</p>
-
-      <!-- Countdown display -->
-      <div id="countdown">--</div>
-
-      <!-- Webpage button -->
-      <button id="webBtn" class="hidden">Open Result Page</button>
-    </div>
-  </div>
-
-  <!-- Video embed section -->
-  <div class="video-section">
-    <h2>Prize Video</h2>
-    <div id="player"></div>
-  </div>
-
-  <!-- Game result audio -->
-  <audio id="winAudio" src="https://cdn.pixabay.com/audio/2022/03/15/audio_61bbf3cf5d.mp3"></audio>
-
-</div>
-
-<script src="script.js"></script>
+  <!-- Link to JavaScript -->
+  <script src="script.js"></script>
 </body>
 </html>
