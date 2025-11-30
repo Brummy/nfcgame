@@ -1,33 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Texas A&amp;M Innovation - White Elephant 2025</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>NFC Game</title>
+  <link rel="stylesheet" href="style.css">
 
-<!-- ✅ If you rename your CSS or JS files, update these names below -->
-<link rel="stylesheet" href="nfccss.css" />
-<script src="nfcgame.js" defer></script>
-
-<!-- confetti library -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- YouTube API for embedding player -->
+  <script src="https://www.youtube.com/iframe_api"></script>
 </head>
-
 <body>
-  <div id="main">
 
-    <!-- VIDEO EMBED FRAME (we fill src dynamically in JS) -->
-    <iframe id="resultVideo" class="embedVideo"></iframe>
-    
-    <!-- RESULT MESSAGE OUTPUT -->
-    <div id="message"></div>
+<div class="container">
 
-    <!-- COUNTDOWN -->
-    <div id="countdown" style="display:none;"></div>
+  <h1>NFC Prize Tap Game</h1>
 
-    <!-- START/REVEAL BUTTON -->
-    <button id="startBtn">Reveal Result</button>
+  <div class="card">
+    <h2>Tap to Scan</h2>
 
+    <div class="scan-box">
+      <p id="status">Bring a programmed NFC tag close to the reader</p>
+      <p id="tagOutput">No tag scanned yet...</p>
+
+      <!-- Countdown display -->
+      <div id="countdown">--</div>
+
+      <!-- Webpage button -->
+      <button id="webBtn" class="hidden">Open Result Page</button>
+    </div>
   </div>
+
+  <!-- Video embed section -->
+  <div class="video-section">
+    <h2>Prize Video</h2>
+    <div id="player"></div>
+  </div>
+
+  <!-- Game result audio -->
+  <audio id="winAudio" src="https://cdn.pixabay.com/audio/2022/03/15/audio_61bbf3cf5d.mp3"></audio>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
