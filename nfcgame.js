@@ -1,101 +1,226 @@
-/* ====================================
-   🔧🔧 EDIT THESE VALUES BELOW
-====================================== */
+/* ===== USER EDIT ZONE — update these IDs/links as needed ===== */
+const WINNER_REDIRECT_PAGE = "https://brummy.github.io/nfctag";  
+const YOUTUBE_VIDEO_ID     = "dQw4w9WgXcQ"; 
+/* ============================================================ */
 
-// List of "normal" winners
-const winners = ["00", "14", "22", "31"]; 
+let player; // YouTube player instance
+let countdownTimer;
+let countdownValue = 5; // seconds for countdown
 
-// One grand prize tag (must match EXACT tag text)
-const grandPrizeTag = "40"; // <-- EDIT to choose your grand prize tag
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player("player", {
+    videoId: YOUTUBE_VIDEO_ID,
+    playerVars: {
+      autoplay: 1,
+      controls: 0,
+      mute: 0,
+      playsinline: 1, 
+      rel: 0
+    },
+    events: {
+      onReady: e => {
+        e.target.playVideo(); 
+        enableAudio(); 
+      }
+    }
+  });
+}
 
-// Videos for each result.
-// To get the video ID, copy the part after `youtu.be/` or `v=` in any YouTube URL
-const videoWinnerID = "h6yyxW5xU6A"; // <-- EDIT to your WINNER video ID
-const videoLoserID  = "3UC96g1A4Nc"; // ✔ Current loser ID from your link — EDIT if desired
-const videoMajorID  = "OItP8-_mjXw"; // <-- EDIT to your MAJOR AWARD video ID
+function enableAudio() {
+  try {
+    document.getElementById("winAudio").play();
+  } catch {}
+}
+function enableAudio() {
+  try {
+    player.unMute();
+    player.setVolume(100);
+  } catch (err) {
+    console.warn("Audio enable failed:", err);
+  }
+}
 
-// Sounds that play after result
-const soundWinner = "winner.mp3"; // <-- optional, leave as-is if unused
-const soundLoser  = "loser.mp3";  // <-- optional
-const soundMajor  = "major.mp3";  // <-- optional
-
-/* ====================================
-   🎯 DO NOT CHANGE BELOW THIS unless customizing behavior
-====================================== */
-
-const params = new URLSearchParams(window.location.search);
-const tag = params.get("tag");
-
-// Clean the URL bar so tag doesn't show publicly
-history.replaceState({}, "", window.location.pathname);
-
-document.addEventListener("DOMContentLoaded", () => {
-  const msg = document.getElementById("message");
-  const cd  = document.getElementById("countdown");
-  const vid = document.getElementById("resultVideo");
-  const btn = document.getElementById("startBtn");
-
-  if (!tag) {
-    msg.innerHTML = `<h1>No tag detected.</h1>`;
-    vid.style.display = "none";
-    btn.style.display = "none";
+async function startNFCScan() {
+  if (!("NDEFReader" in window)) {
+    document.getElementById("status").textContent = "❌ Web NFC not supported on this phone";
     return;
   }
 
-  function playResultSoundAndVideo(mp3file) {
-  const audio = new Audio(mp3file);
-  audio.play().catch(()=>{});
+  try {
+    const reader = new NDEFReader();
+    await reader.scan();
+    document.getElementById("status").textContent = "✅ Scanning for NFC tags...";
+
+    reader.onreading = ({serialNumber}) => handleTag(serialNumber);
+  } catch (err) {
+    document.getElementById("status").textContent = "❌ NFC scan failed: " + err;
+  }
 }
 
-  function runConfetti() {
-    confetti({ particleCount: 150, spread: 160, angle: -90, origin: {x:0.5,y:0.25}});
+function handleTag(uidString) {
+  document.getElementById("status").textContent = "Tag detected ✅";
+
+  // Convert UID string into numeric bytes (reliable)
+  const bytes = uidString
+    .split(":")
+    .map(v => parseInt(v, 16))
+    .filter(v => !isNaN(v));
+
+  let sum = bytes.reduce((a,b) => a + b, 0);
+  let tagNumber = sum % 100;
+
+  // Fix display
+  const displayNum = tagNumber.toString().padStart(2, "0");
+  document.getElementById("tagOutput").textContent = "🎯 Your Tag Number: " + displayNum;
+
+  // Determine winner/loser
+  const isWinner = (sum % 2 === 0); // ✅ simple, reliable winner rule
+
+  document.getElementById("webBtn").classList.add("hidden"); // Default hide
+  if (isWinner) {
+    document.getElementById("tagOutput").textContent += " 🏆 (WINNER!)";
+    document.getElementById("webBtn").onclick = () => {
+      location.href = WINNER_REDIRECT_PAGE; // ✅ Opens your result page
+    };
+    document.getElementById("webBtn").classList.remove("hidden"); // Show only if winner
+  } else {
+    document.getElementById("tagOutput").textContent += " ☠️ (Loser)";
+    document.getElementById("webBtn").classList.add("hidden");
   }
 
-  function revealMajor() {
-  msg.innerHTML = `<div id="tagNumber">${tag}</div><div class="majorAward">Major Award!</div>`;
-  vid.src = `https://www.youtube.com/embed/${videoMajorID}?autoplay=1&mute=0`;
-  playResultSoundAndVideo(soundMajor);
-  setTimeout(runConfetti, 200);
+  // Play win audio if winner
+  if (isWinner) {
+    document.getElementById("winAudio").currentTime = 0;
+    document.getElementById("winAudio").play();
+  }
+
+  // Start countdown visual
+  runCountdown();
+
+  embedVideo();
 }
 
-  function revealWinner() {
-  msg.innerHTML = `<div id="tagNumber">${tag}</div><div class="bigCheck">✔</div><div id="winnerText">WINNER!!</div>`;
-  vid.src = `https://www.youtube.com/embed/${videoWinnerID}?autoplay=1&mute=0`; // <-- unmuted if YouTube is allowed
-  playResultSoundAndVideo(soundWinner);
-  setTimeout(runConfetti, 200);
+function runCountdown() {
+  clearInterval(countdownTimer);
+  countdownValue = 5;
+  document.getElementById("countdown").textContent = countdownValue;
+
+  countdownTimer = setInterval(() => {
+    countdownValue--;
+    document.getElementById("countdown").textContent = countdownValue;
+    if (countdownValue <= 0) clearInterval(countdownTimer);
+  }, 1000);
 }
 
-  function revealLoser() {
-  msg.innerHTML = `<div id="tagNumber">${tag}</div><div class="flashingX">X</div><div id="loserText">LOSER!!</div>`;
-  vid.src = `https://www.youtube.com/embed/${videoLoserID}?autoplay=1&mute=0`;
-  playResultSoundAndVideo(soundLoser);
+function embedVideo() {
+  // already handled by API
 }
 
-  // Start 3-2-1 countdown when Reveal button pressed
-  btn.addEventListener("click", () => {
-    btn.remove();
-    cd.style.display = "block";
-    let count = 3;
-    cd.textContent = count;
+function enableAudio() {
+  document.getElementById("winAudio").play();
+}
 
-    const i = setInterval(() => {
-      count--;
-      cd.textContent = count;
-      if (count === 0) {
-        clearInterval(i);
-        cd.remove();
+function scriptReady() {
+  console.log("Game ready, scanning...");
+}
 
-        if (tag === grandPrizeTag) {
-          revealMajor();
-        } 
-        else if (winners.includes(tag)) {
-          revealWinner();
-        } 
-        else {
-          revealLoser();
-        }
-      }
-    }, 1000);
+document.getElementById("scanXiao").classList.add("btn");
+document.getElementById("scanXiao").onclick = startNFCScan;
+document.getElementById("scanBtn").addEventListener("click", startNFCScan);
+scriptReady();
+
+function embedVideo() {
+  if (!article.youtubeID) {
+    console.error("YouTube ID missing for video embed.");
+    return;
+  }
+  const iframe = document.createElement("iframe");
+  iframe.src = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=0&playsinline=1`;
+  iframe.allow = "autoplay; encrypted-media; fullscreen";
+  iframe.allowFullscreen = true;
+  document.getElementById("player").innerHTML = "";
+  document.getElementById("player").appendChild(iframe);
+  iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', "*");
+  iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', "*");
+}
+ 
+function playAudio() {
+  document.getElementById("audio").play();
+  document.getElementById("scoreDisplay").textContent = "Starting countdown...";
+  startCountdown();
+}
+
+function startCountdown() {
+  var countdown = 5;
+  var countdownDisplay = document.getElementById("countdown");
+  countdownDisplay.innerHTML = countdown;
+  countdownTimer = setInterval(function() {
+    countdown--;
+    countdownDisplay.innerHTML = countdown;
+    if(countdown <= 0) {
+      clearInterval(countdownTimer);
+      countdownDisplay.innerHTML = "--";
+    }
+  }, 1000);
+}
+
+function startCountdown(seconds) {
+  const countdownEl = document.getElementById("countdown");
+  countdownEl.textContent = seconds;
+  clearInterval(countdownTimer);
+  countdownTimer = setInterval(() => {
+    seconds--;
+    countdownEl.textContent = seconds;
+    if (seconds <= 0) {
+      clearInterval(countdownTimer);
+      countdownEl.textContent = "--";
+    }
+  }, 1000);
+}
+
+function handleNFCReading(serialNumber) {
+  console.log("NFC Tag detected:", serialNumber);
+  document.getElementById("scoreDisplay").textContent = "Tag UID: " + serialNumber;
+  startCountdown(5);
+  window.location.href = "https://brummy.github.io/nfcgame"; // redirect winner page
+}
+
+async function startNFCScan() {
+  if (!("NDEFReader" in window)) {
+    alert("Web NFC is not available on this device.");
+    return;
+  }
+  try {
+    const reader = new NDEFReader();
+    document.getElementById("scoreDisplay").textContent = "Scanning for NFC tags...";
+    await reader.scan();
+    reader.onreading = ({ serialNumber }) => {
+      handleNFCReading(serialNumber);
+    };
+  } catch (error) {
+    console.error("Error during NFC scan:", error);
+    alert("Failed to start NFC scan.");
+  }
+}
+
+function optimizeForPhones() {
+  document.body.classList.add("phone-mode");
+  document.getElementById("scoreDisplay").classList.add("small-font");
+}
+
+optimizeForPhones();
+
+/* Optional: if you want background video with sound on page load */
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player("player", {
+    videoId: YOUTUBE_VIDEO_ID,
+    playerVars: {
+      autoplay: 1,
+      controls: 0,
+      mute: 0,
+      playsinline: 1,
+      rel: 0
+    },
+    events: { onReady: e => e.target.playVideo() }
   });
-
-});
+}
