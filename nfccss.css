@@ -1,119 +1,99 @@
-/* ====== BASE PAGE LAYOUT ====== */
+/* ===== PHONE-FRIENDLY DEFAULTS ===== */
 body {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  height: 100vh;
-  background: black;
+  box-sizing: border-box;
+  background: #111;
   color: white;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
   text-align: center;
 }
 
-/* ====== EMBED VIDEO ====== */
-.embedVideo {
-  width: 100vw;
-  height: 28vh;
-  border: none;
-  margin-bottom: 20px;
-  display: block;
+/* ===== CONTAINER CONSTRAINED TO PHONE WIDTH ===== */
+.container {
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+  padding: 12px;
 }
 
-/* ====== COUNTDOWN ====== */
+/* ===== CARD UI ===== */
+.card {
+  background: #222;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* ===== SCAN BOX ===== */
+.scan-box {
+  border: 2px dashed #555;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 8px;
+  position: relative;
+  min-height: 160px;
+}
+
+#tagOutput {
+  font-size: 13px;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+/* ===== COUNTDOWN TIMER STYLE ===== */
 #countdown {
-  font-size: 16em;
-  font-weight: 900;
-  color: yellow;
-  animation: countdownFlash 0.6s infinite alternate;
-  line-height: 1;
-  margin-top: 20px;
+  font-size: 36px;
+  font-weight: bold;
+  margin-top: 16px;
+  text-shadow: 0 0 10px currentColor;
 }
 
-@keyframes countdownFlash {
-  from { opacity: 1; }
-  to   { opacity: 0.3; }
-}
-
-/* ====== WINNER ====== */
-.bigCheck {
-  font-size: 14em; /* change this if you want checkmark even bigger */
-  color: #0f0;
-  animation: winnerPulse 0.8s infinite alternate;
-  line-height: 1;
-  margin-top: 10px;
-}
-
-@keyframes winnerPulse {
-  from { transform:scale(1); opacity:1; }
-  to   { transform:scale(1.2); opacity:0.8; }
-}
-
-#winnerText {
-  font-size: 6em; /* increase this for even larger WINNER text */
-  font-weight: 900;
-  color: #0f0;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-/* ====== LOSER ====== */
-.flashingX {
-  font-size: 24em; /* <-- EDIT if you want the X larger */
-  font-weight: 900;
-  color: red;
-  animation: flash 0.4s infinite alternate;
-  line-height: 1;
-  margin-top: 0;
-}
-
-#loserText {
-  font-size: 6em; /* increase for larger LOSER text */
-  font-weight: 900;
-  color: red;
-  animation: flash 0.5s infinite alternate;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-@keyframes flash {
-  from { opacity: 1; }
-  to   { opacity: 0.2; }
-}
-
-/* ====== MAJOR AWARD ====== */
-.majorAward {
-  font-size: 12em; /* <-- EDIT for bigger Major Award text */
-  font-weight: 900;
-  color: gold;
-  animation: majorFlash 0.45s infinite alternate;
-  line-height: 1;
-  margin-top: 10px;
-}
-
-@keyframes majorFlash {
-  from { opacity: 1; }
-  to   { opacity: 0.3; }
-}
-
-/* ====== BUTTON STYLING ====== */
+/* ===== BUTTONS ===== */
 button {
-  font-size: 5em;
-  font-weight: 900;
-  background: white;
-  color: black;
-  padding: 20px 50px;
-  border-radius: 1rem;
-  cursor:pointer;
-  border:none;
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  background: #E60000;
+  color: white;
+  font-weight: bold;
+  margin-top: 16px;
+  cursor: pointer;
+}
+button:active {
+  transform: scale(0.96);
 }
 
-/* shows tag number in result */
-#tagNumber {
-  font-size: 5em; /* <-- EDIT for larger tag text on PC/TV */
-  font-weight: 900;
-  margin-bottom: 15px;
+.hidden { display: none; }
+.hidden-force { display: none !important; }
+.hidden-video { max-width:100%; height:auto; }
+
+/* Winner button visibility control */
+.hidden {
+  display: none;
+}
+
+button.hidden {
+  display: none;
+}
+
+button {
+  transition: transform 0.1s ease;
+}
+
+/* YouTube embed sizing */
+.video-section #player iframe {
+  width: 100%;
+  max-width: 350px;
+  height: 200px;
+  border-radius: 8px;
+  border: 2px solid #333;
+}
+
+/* Hide element utility */
+.hidden {
+  display: none;
 }
