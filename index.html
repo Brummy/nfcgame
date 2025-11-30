@@ -1,18 +1,31 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NFC Game Page</title>
+<html lang="en">
 
-  <!-- Link to CSS -->
-  <link rel="stylesheet" href="style.css">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Texas A&M Innovation – White Elephant 2025</title>
+
+<!-- Confetti library -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
+
+<!-- Styles -->
+<link rel="stylesheet" href="style.css" />
+
+<!-- Logic -->
+<script src="script.js" defer></script>
 </head>
 
 <body>
-  <div id="main"></div>
 
-  <!-- Link to JavaScript -->
-  <script src="script.js"></script>
+  <div id="main">
+    <!-- Countdown shows here first -->
+    <div id="countdown"></div>
+
+    <!-- Result (Winner/Loser/Grand Prize) shows here after countdown -->
+    <div id="result"></div>
+  </div>
+
 </body>
+
 </html>
