@@ -1,23 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Texas A&M Innovation - White Elephant 2025</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Texas A&amp;M Innovation - White Elephant 2025</title>
 
+<!-- LINK TO YOUR EXISTING UPLOADED FILES (DO NOT CHANGE) -->
+<link rel="stylesheet" href="nfccss.css">
+<script defer src="nfcgame.js"></script>
 
-<div id="main">
-  <div id="tagDisplay"></div>
-  <div id="resultIcon"></div>
-  <div id="resultText"></div>
+<!-- YOUTUBE FRAME (loads with audio only, no extra sounds) -->
+<iframe
+  id="ytFrame"
+  style="border:none;position:fixed;top:0;left:0;width:100%;height:40vh;z-index:10;"
+  allow="autoplay; encrypted-media; picture-in-picture"
+  allowfullscreen
+></iframe>
+
+<main style="display:flex;flex-direction:column;height:100vh;justify-content:center;align-items:center;">
+  <div id="revealed-content" style="width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;"></div>
+
+  <!-- PLAY VIDEO BUTTON SHOULD BE THE ONLY BUTTON ON PAGE LOAD -->
+  <button id="playVideo">▶ Play Video</button>
+
+  <!-- REVEAL BUTTON WILL APPEAR LATER FROM JS AFTER VIDEO STARTS PLAYING -->
   <div id="reveal-container"></div>
-</div>
 
-
-<script src="script.js"></script>
+  <!-- RESULTS (hidden until reveal) -->
+  <div id="resultTag"></div>
+  <div id="resultIcon"></div>
+  <div id="resultLabel"></div>
+  <div id="countdown"></div>
+  <canvas id="confetti-canvas"></canvas>
+</main>
 
 </body>
 </html>
