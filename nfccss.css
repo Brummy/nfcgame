@@ -1,128 +1,115 @@
+/* ===============================
+   GLOBAL PAGE LAYOUT
+================================= */
 body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background: black;
-  color: white;
-  overflow: hidden;
-  height: 100vh;
-}
-
-#main {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  background: #f0f0f0;
+  overflow: hidden;
   justify-content: center;
   align-items: center;
   text-align: center;
-  height: 100vh;
-  width: 100vw;
 }
 
+/* ===============================
+   COUNTDOWN TIMER
+================================= */
 #countdown {
-  font-size: 10em; /* Reduced so fits both phones and displays */
-  font-weight: 900;
-  margin-bottom: 20px;
+  position: absolute;
+  top: 5%;
+  font-size: 5em;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 20px black;
+  z-index: 40;
   animation: flash 0.6s infinite alternate;
 }
 
-#tagDisplay {
-  font-size: 3em;  /* Smaller base text for mobile */
+/* ===============================
+   RESULT LABEL (TAG NUMBER)
+================================= */
+#resultTag {
+  position: absolute;
+  top: 2%;
+  font-size: 2.2em;
   font-weight: 900;
-  margin-bottom: 10px;
+  color: #FFC72C; /* Aggie gold tone */
+  text-shadow: 0px 0px 12px black;
+  z-index: 50;
+  width: 100%;
+  text-align: center;
 }
 
-/* ====== Result Icons ====== */
+/* ===============================
+   WINNER SCREEN STYLES
+================================= */
 .bigGreenCheck {
-  font-size: 20em; /* Reduced from 26em so fits phones */
-  color: #00ff0a;
-  line-height: 1;
+  font-size: 18em;
+  font-weight: 900;
+  color: #6BA539;
   animation: flash 0.6s infinite alternate;
-}
-
-.bigRedX {
-  font-size: 20em;
-  color: red;
-  line-height: 1;
-  animation: flash 0.4s infinite alternate;
-}
-
-.bigGoldBang {
-  font-size: 18em; /* Slightly smaller so doesn't overflow on small phones */
-  color: gold;
-  line-height: 1;
-  animation: flash 0.5s infinite alternate;
-  text-shadow: 0 0 40px gold, 0 0 80px orange;
-}
-
-@keyframes flash {
-  from { opacity: 1; }
-  to   { opacity: 0.3; }
+  margin: 0;
 }
 
 .winnerLabel {
-  font-size: 3em;
-  font-weight: bold;
-  color: #6BA539; /* Aggie green-ish */
+  font-size: 5em;
+  font-weight: 900;
+  color: #6BA539;
   animation: flash 0.7s infinite alternate;
+  margin-top: 10px;
+  text-transform: uppercase;
+  text-shadow: 0 0 30px black;
+}
+
+/* ===============================
+   LOSER SCREEN STYLES
+================================= */
+.bigRedX {
+  font-size: 20em;
+  font-weight: 900;
+  color: red;
+  animation: flash 0.3s infinite alternate;
+  margin: 0;
 }
 
 .loserLabel {
-  font-size: 3em;
-  font-weight: bold;
-  color: crimson;
+  font-size: 5em;
+  font-weight: 900;
+  color: red;
+  margin-top: 15px;
   animation: flash 0.4s infinite alternate;
+  text-transform: uppercase;
+  text-shadow: 0 0 35px black;
 }
 
-.majorMark {
-  font-size: 9em;
+/* ===============================
+   MAJOR AWARD / GRAND PRIZE STYLES
+================================= */
+.bigGoldBang {
+  font-size: 16em;
   font-weight: 900;
   color: gold;
   animation: flash 0.5s infinite alternate;
+  margin: 0;
+  text-shadow: 0 0 50px black;
 }
 
-.checkMark {
-  font-size: 7em;
-  color: limegreen;
+.majorLabel {
+  font-size: 5em;
   font-weight: 900;
-}
-
-.loserMark {
-  font-size: 10em;
-  font-weight: 900;
-  color: red;
-  animation: flash 0.5s infinite alternate;
-}
-
-
-/* TAMU themed banner strip */
-#tamu-banner {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 6vh;
-  background: #500000; /* Aggie maroon */
-  z-index: 1;
-  border-bottom: 5px solid white;
-}
-
-#resultText {
-  font-size: 4em; /* Reduced from monitor version for mobile */
-  font-weight: 900;
-  margin-top: 15px;
-}
-
-/* "Reveal Result" button styling AFTER video plays */
-#revealBtn {
-  font-size: 4em;
-  padding: 15px 50px;
-  font-weight: 900;
-  background: #500000;
-  color: white;
-  border: 5px solid white;
-  border-radius: 20px;
-  cursor: pointer;
-  animation: flash 0.6s infinite alternate;
+  color: gold;
   margin-top: 20px;
-  z-index: 2;
+  animation: flash 0.6s infinite alternate;
+  text-transform: uppercase;
+  text-shadow: 0 0 55px black;
 }
+
+/* ===============================
+   REVEAL BUTTON (hidden by default!)
+================================= */
+#reveal {
+  display: none; /* <-- s*
