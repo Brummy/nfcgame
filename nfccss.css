@@ -1,173 +1,60 @@
-/* ===============================
-   GLOBAL PAGE LAYOUT
-================================= */
 body {
   margin: 0;
-  padding: 0;
   font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: #f0f0f0;
+  background: #fdfdfd;
   overflow: hidden;
   justify-content: center;
   align-items: center;
   text-align: center;
 }
 
-/* ===============================
-   COUNTDOWN TIMER
-================================= */
-#countdown {
-  position: absolute;
-  top: 5%;
-  font-size: 5em;
+/* Tag number display before scan */
+.smallTag {
+  font-size: 1.6em; /* Phone friendly — EDIT HERE if needed */
   font-weight: bold;
+  margin-bottom: 18px;
+}
+
+/* Play Video Button — fixed full size */
+.bigPlay {
+  font-size: 2.2em;  /* Large but fits phones — EDIT HERE */
+  width: 90vw;
+  height: 18vh;
+  max-width: 800px;
+  background: #500000;
   color: white;
-  text-shadow: 0 0 20px black;
-  z-index: 40;
-  animation: flash 0.6s infinite alternate;
-}
-
-/* ===============================
-   RESULT LABEL (TAG NUMBER)
-================================= */
-#resultTag {
-  position: absolute;
-  top: 2%;
-  font-size: 2.2em;
-  font-weight: 900;
-  color: #FFC72C; /* Aggie gold tone */
-  text-shadow: 0px 0px 12px black;
-  z-index: 50;
-  width: 100%;
-  text-align: center;
-}
-
-/* ===============================
-   WINNER SCREEN STYLES
-================================= */
-.bigGreenCheck {
-  font-size: 18em;
-  font-weight: 900;
-  color: #6BA539;
-  animation: flash 0.6s infinite alternate;
-  margin: 0;
-}
-
-.winnerLabel {
-  font-size: 5em;
-  font-weight: 900;
-  color: #6BA539;
-  animation: flash 0.7s infinite alternate;
-  margin-top: 10px;
-  text-transform: uppercase;
-  text-shadow: 0 0 30px black;
-}
-
-/* ===============================
-   LOSER SCREEN STYLES
-================================= */
-.bigRedX {
-  font-size: 20em;
-  font-weight: 900;
-  color: red;
-  animation: flash 0.3s infinite alternate;
-  margin: 0;
-}
-
-.loserLabel {
-  font-size: 5em;
-  font-weight: 900;
-  color: red;
-  margin-top: 15px;
-  animation: flash 0.4s infinite alternate;
-  text-transform: uppercase;
-  text-shadow: 0 0 35px black;
-}
-
-/* ===============================
-   MAJOR AWARD / GRAND PRIZE STYLES
-================================= */
-.bigGoldBang {
-  font-size: 16em;
-  font-weight: 900;
-  color: gold;
-  animation: flash 0.5s infinite alternate;
-  margin: 0;
-  text-shadow: 0 0 50px black;
-}
-
-.majorLabel {
-  font-size: 5em;
-  font-weight: 900;
-  color: gold;
-  margin-top: 20px;
-  animation: flash 0.6s infinite alternate;
-  text-transform: uppercase;
-  text-shadow: 0 0 55px black;
-}
-
-/* ===============================
-   REVEAL BUTTON (hidden by default!)
-================================= */
-#reveal {
-  display: none; /* <-- stays hidden until JS makes it visible */
-  font-size: 3.2em;
-  padding: 25px 50px;
-  background: black;
-  color: #FFC72C;
-  border: 6px solid #FFC72C;
-  border-radius: 25px;
-  font-weight: 900;
-  cursor: pointer;
-  position: fixed;
-  bottom: 5%;
-  z-index: 60;
-  text-transform: uppercase;
-  box-shadow: 0 0 35px black;
-}
-
-/* "Play Video" button */
-#playVideo {
-  position: fixed;
-  top: 6%; /* Always visible near top */
-  width: 90%; /* Wide tap area */
-  max-width: 600px;
-  font-size: 3em; /* BIG for phone screens */
-  padding: 20px 0;
-  background: black;
-  color: #4CAF50; /* Green like a success button */
-  border: 5px solid #4CAF50;
+  border: none;
   border-radius: 20px;
-  font-weight: 900;
+  font-weight: bold;
   cursor: pointer;
-  z-index: 100; /* ABOVE ALL OTHER ELEMENTS */
-  text-transform: uppercase;
-  box-shadow: 0 0 40px rgba(0,0,0,0.6);
-  pointer-events: auto; /* Ensures it can be clicked */
+  margin-top: 40px;
 }
 
-/* ===============================
-   CONFETTI / FIREWORKS LAYERS
-================================= */
-#confetti-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 30;
-}
-canvas, #confetti-canvas, #countdown {
-  pointer-events: none;
+
+/* Result reveal button */
+.revealResult {
+  font-size: 2.5em; /* EDIT HERE for size */
+  padding: 30px;
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 20px;
+  cursor: pointer;
 }
 
-/* ===============================
-   ANIMATIONS
-================================= */
+/* Winner & Loser Screens */
+#winnerScreen .check { font-size: 10em; color: green; }
+#winnerScreen .text { font-size: 2.8em; color: green; font-weight: bold; animation: flash 0.6s infinite alternate; }
+
+#loserScreen .x { font-size: 10em; color: red; font-weight: bold; animation: flash 0.5s infinite alternate; }
+#loserScreen .text { font-size: 2.5em; color: red; font-weight: bold; animation: flash 0.7s infinite alternate; }
+
+#awardScreen .bang { font-size: 12em; color: gold; animation: flash 0.4s infinite alternate; }
+#awardScreen .text { font-size: 2.8em; color: gold; font-weight: bold; animation: flash 0.6s infinite alternate; }
+
 @keyframes flash {
   from { opacity: 1; }
-  to   { opacity: 0.2; }
+  to { opacity: 0.2; }
 }
