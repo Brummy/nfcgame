@@ -1,160 +1,107 @@
-/* ====== EDIT CONFIG BELOW ====== */
-const winners = ["00", "14", "22", "31"]; // winning tags
-const majorPrize = "40";                  // grand prize tag
+/* ===============================
+   CONFIG — MAKE CHANGES HERE ONLY
+================================= */
+const winners = ["00", "14", "22", "31"]; // <- Add your winning tag numbers here
+const majorPrize = "99";                  // <- Set your ONE grand prize tag number here
+const winnerVideoID = "bfaeGKm1-wc";      // <- Replace with the video ID you want for winners
+const majorVideoID  = "OItP8-_mjXw";      // <- Replace with Major Award video ID
+const loserVideoID  = "3UC96g1A4Nc";      // <- Loser video ID
 /* ================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-  const tag  = new URLSearchParams(location.search).get("tag");
 
-  const container = document.getElementById("main");
-  const countdown = document.createElement("div");
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const tag = params.get("tag");
+
+  // Clean URL after loading so it shows as a title-only URL
+  history.replaceState({}, "", window.location.pathname);
+
+  const tagDisplay = document.getElementById("resultTag");
+  const iconDiv    = document.getElementById("resultIcon");
+  const labelDiv   = document.getElementById("resultLabel");
+  const revealDiv  = document.getElementById("reveal-container");
+  const body       = document.body;
+  const ytFrame    = document.getElementById("ytFrame");
+  const countdown  = document.createElement("div");
+
+  // Prepare countdown element but hide until needed
   countdown.id = "countdown";
-  container.appendChild(countdown);
+  countdown.style.display = "none";
+  countdown.style.fontSize = "6em";
+  countdown.style.fontWeight = "bold";
+  countdown.style.animation = "flash 0.6s infinite alternate";
+  body.appendChild(countdown);
 
   if (!tag) {
-    document.getElementById("tagDisplay").textContent = "No tag scanned yet...";
+    tagDisplay.textContent = "No tag scanned yet...";
     return;
   }
-  document.getElementById("tagDisplay").textContent = `Number ${tag}`;
 
-  // Build iframe
-  const iframe = document.createElement("iframe");
-  iframe.id = "ytFrame";
-  iframe.width = "100%";
-  iframe.height = "350";
-  iframe.style = "border:none;position:fixed;top:0;left:0;width:100vw;height:40vh;z-index:10";
-  iframe.allow = "autoplay; encrypted-media; picture-in-picture";
-  iframe.allowFullscreen = true;
-  iframe.src = `https://www.youtube.com/embed/${loserVideoID}?playsinline=1`; // default filler, overwritten below
+  // Display tag number at top of revealed content
+  tagDisplay.textContent = `Tag #${tag}`;
 
-  // RESULT SELECTOR AFTER VIDEO STARTS to reveal
-  const revealHolder = document.getElementById("reveal-container");
+  // Reveal button initially hidden
+  revealDiv.innerHTML = `<button id="reveal" style="display:none;">🎁 Reveal Result</button>`;
 
-  // Kick off YouTube after button tap
-  document.getElementById("playBtn").addEventListener("click", () => {
-    document.getElementById("playBtn").remove(); // remove play button after tap
+  // Decide result type
+  let resultType;
+  if (tag === majorPrize) resultType = "major";
+  else if (winners.includes(tag)) resultType = "winner";
+  else resultType = "loser";
 
-    // Decide result and correct video
-    let videoID, iconHTML, textHTML;
+  // "Play Video" button to start YouTube with audio
+  revealDiv.innerHTML = `<button id="playVideo">🎬 Play Video</button>`;
 
-    if (tag === majorPrize) {
-      videoID = majorVideoID;
-      iconHTML = `<div class="bigGoldBang">!</div>`;
-      textHTML = `<div class="majorLabel">🏆 MAJOR AWARD</div>`;
-    } else if (winners.includes(tag)) {
-      videoID = winnerVideoID;
-      iconHTML = `<div class="bigGreenCheck">✔</div>`;
-      textHTML = `<div class="winnerLabel">WINNER</div>`;
-    } else {
-      videoID = loserVideoID;
-      iconHTML = `<div class="bigRedX">X</div>`;
-      textHTML = `<div class="loserLabel">LOSER!</div>`;
-    }
+  document.getElementById("playVideo").addEventListener("click", () => {
+    // Remove Play Video button
+    document.getElementById("playVideo").remove();
 
-    // Update iframe to correct video
-    iframe.src = `https://www.youtube.com/embed/${videoID}?autoplay=1&playsinline=1&mute=0`;
-    document.body.appendChild(iframe);
+    // Set the video source depending on result type
+    let videoID = "";
+    if      (resultType === "major")  videoID = majorVideoID;
+    else if (resultType === "winner") videoID = winnerVideoID;
+    else if (resultType === "loser")  videoID = loserVideoID;
 
-    // Show countdown 3,2,1
-    startCountdown();
-
-    // Add reveal button ONLY after video has begun (small delay to guarantee playback start)
-    setTimeout(() => {
-      const revealBtn = document.createElement("button");
-      revealBtn.id = "revealBtn";
-      revealBtn.textContent = "🎁 Reveal Result";
-      revealBtn.onclick = showResult;
-      revealHolder.appendChild(revealBtn);
-    }, 900);
+    // Load YouTube iframe with autoplay and audio enabled
+    ytFrame.src = `https://www.youtube.com/embed/${videoID}?autoplay=1&playsinline=1&mute=0`;
   });
 
-  function startCountdown() {
-    let count = 3;
-    countdown.textContent = count;
-    const t = setInterval(() => {
-      count--;
-      countdown.textContent = count;
-      if (count <= 0) {
-        clearInterval(t);
-        countdown.style.display = "none";
-      }
-    }, 1000);
-  }
+  // Attach countdown and reveal logic when video actually starts
+  ytFrame.addEventListener("load", () => {
+    // Make sure video has time to start then reveal the reveal button
+    setTimeout(() => {
+      document.getElementById("reveal").style.display = "block";
+      startCountdown();
+    }, 400);
+  });
 
+  // Run countdown 3,2,1 then show result screen
   function startCountdown() {
     countdown.style.display = "block";
-    countdown.style.fontSize = "8em";
-    countdown.style.animation = "flash 0.6s infinite alternate";
     let count = 3;
     countdown.textContent = count;
-    const t = setInterval(() => {
+
+    const timer = setInterval(() => {
       count--;
       countdown.textContent = count;
       if (count <= 0) {
-        clearInterval(t);
+        clearInterval(timer);
         countdown.remove();
+        showResultScreen();
       }
     }, 1000);
   }
 
-  function showResult() {
-    countdown.remove();
-  }
+  // Show the center result screen with icon and labels
+  function showResultScreen() {
+    revealDiv.innerHTML = ""; // clear reveal button
 
-  function showResult() {
-    // intentionally nothing else plays — YouTube already provides audio
-  }
-
-  function showResult() {
-    countdown.remove();
-
-  function showResult() {
-    countdown.remove();
-  }
-
-  function showResult() {
-    countdown.remove();
-  }
-
-  function runFireworks() {
-    const end = Date.now() + 2600;
-    (function boom(){
-      confetti({ particleCount: 20, spread: 130, angle: -90, origin: { x: Math.random(), y: 0.9 }});
-      if (Date.now() < end) requestAnimationFrame(boom);
-    })();
-  }
-
-  function runConfetti() {
-    const end = Date.now() + 2600;
-    (function boom(){
-      if (iframe.style.y === success) {
-// only on video plays
-  function startCountdown() {
-    countdown.style.display = "block";
-    countdown.style. "flash"; second天 Day implementation।
-    countdown.style.transform"="flash 0. 
-  function updateUI() { return; }
-  document.body.appendChild(confettiScript);
-}
-})();
-  (function boom(){
-  if (typeof confetti === "function") {
-    confetti({ particleCount: 50, spread: 120, angle: -90, origin: { x: Math.random(), y: 0.8 }});
-  }
-}
-})();
-  position:fixed; top:0; left:0; width:100vw; height:40vh; z-index:10; border:none; }
-  allow="autoplay; encrypted-media; picture-in-picture";
-
-/* ===== Process between scans ===== */
-unction runFireworks() {
-  const end = dove-lines 1000;
-  i++) direction-or-ES";
-
-/* ===== RESULTS after Watch Video Page ===== */
-buttonHolder.appendChild. 
-  ="com.results"; container
-
-  function updateUI() { return; }
-  document.body.appendChild(confettiScript);
-});
+    if (resultType === "major") {
+      iconDiv.innerHTML  = `<div class="majorMark">❗</div>`;
+      labelDiv.innerHTML = `<div id="majorLabel">MAJOR AWARD!</div>`;
+      runFireworks();
+      body.style.background = "black";
+    }
+    else if (resultType === "winner") {
+      iconDiv.innerHTML  = `<div class="checkMark">✅</div>`;
+      labelDiv.innerHTML = `<div id="
