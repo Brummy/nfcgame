@@ -1,61 +1,119 @@
+/* ====== BASE PAGE LAYOUT ====== */
 body {
   margin: 0;
   padding: 0;
-  background: #111;
-  color: white;
   font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
   height: 100vh;
-  width: 100vw;
+  background: black;
+  color: white;
+  overflow: hidden;
+  display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   text-align: center;
-  overflow: hidden;
 }
 
+/* ====== EMBED VIDEO ====== */
+.embedVideo {
+  width: 100vw;
+  height: 28vh;
+  border: none;
+  margin-bottom: 20px;
+  display: block;
+}
+
+/* ====== COUNTDOWN ====== */
 #countdown {
-  font-size: 6rem;
+  font-size: 16em;
   font-weight: 900;
-  margin-bottom: 1rem;
-}
-
-.symbol {
-  font-size: 14rem; 
+  color: yellow;
+  animation: countdownFlash 0.6s infinite alternate;
   line-height: 1;
-  margin: 0;
+  margin-top: 20px;
 }
 
-#winner-text, #loser-text, #major-text {
-  font-size: 4rem;
+@keyframes countdownFlash {
+  from { opacity: 1; }
+  to   { opacity: 0.3; }
+}
+
+/* ====== WINNER ====== */
+.bigCheck {
+  font-size: 14em; /* change this if you want checkmark even bigger */
+  color: #0f0;
+  animation: winnerPulse 0.8s infinite alternate;
+  line-height: 1;
+  margin-top: 10px;
+}
+
+@keyframes winnerPulse {
+  from { transform:scale(1); opacity:1; }
+  to   { transform:scale(1.2); opacity:0.8; }
+}
+
+#winnerText {
+  font-size: 6em; /* increase this for even larger WINNER text */
   font-weight: 900;
-  margin-top: 1rem;
+  color: #0f0;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-/* Winner = Green Check + Flashing text */
-#winner .symbol { color: #00ff00; animation: pulse 0.4s infinite alternate; }
-#winner-text { color: #00ff00; animation: flash 0.5s infinite alternate; }
+/* ====== LOSER ====== */
+.flashingX {
+  font-size: 24em; /* <-- EDIT if you want the X larger */
+  font-weight: 900;
+  color: red;
+  animation: flash 0.4s infinite alternate;
+  line-height: 1;
+  margin-top: 0;
+}
 
-/* Loser = Big Red X + Flashing */
-#loser .symbol { color: red; animation: flash 0.3s infinite alternate; }
-#loser-text { color: red; animation: flash 0.5s infinite alternate; }
+#loserText {
+  font-size: 6em; /* increase for larger LOSER text */
+  font-weight: 900;
+  color: red;
+  animation: flash 0.5s infinite alternate;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 
-/* Major Award = Gold */
-#major .symbol { color: gold; animation: flash 0.5s infinite alternate; }
-#major-text { color: gold; font-size: 5rem; animation: flash 0.4s infinite alternate; }
-
-/* Simple flash animation */
 @keyframes flash {
   from { opacity: 1; }
-  to { opacity: 0.3; }
+  to   { opacity: 0.2; }
 }
 
-@keyframes pulse {
-  from {transform: scale(1)}
-  to {transform: scale(1.1)}
+/* ====== MAJOR AWARD ====== */
+.majorAward {
+  font-size: 12em; /* <-- EDIT for bigger Major Award text */
+  font-weight: 900;
+  color: gold;
+  animation: majorFlash 0.45s infinite alternate;
+  line-height: 1;
+  margin-top: 10px;
 }
 
-@keyframes pulse {
+@keyframes majorFlash {
   from { opacity: 1; }
-  to { opacity: 0.6; }
+  to   { opacity: 0.3; }
+}
+
+/* ====== BUTTON STYLING ====== */
+button {
+  font-size: 5em;
+  font-weight: 900;
+  background: white;
+  color: black;
+  padding: 20px 50px;
+  border-radius: 1rem;
+  cursor:pointer;
+  border:none;
+}
+
+/* shows tag number in result */
+#tagNumber {
+  font-size: 5em; /* <-- EDIT for larger tag text on PC/TV */
+  font-weight: 900;
+  margin-bottom: 15px;
 }
