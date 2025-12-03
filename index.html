@@ -3,17 +3,31 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>NFC Game</title>
-<link rel="stylesheet" href="style.css" />
+<title>Texas A&amp;M Innovation - White Elephant 2025</title>
+
+<!-- ✅ If you rename your CSS or JS files, update these names below -->
+<link rel="stylesheet" href="nfccss.css" />
+<script src="nfcgame.js" defer></script>
+
+<!-- confetti library -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 
-<body id="main">
-  <div id="countdown"></div>
-  <div id="result"></div>
+<body>
+  <div id="main">
 
-  <audio id="sound-winner" src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" preload="auto"></audio>
-  <audio id="sound-fireworks" src="https://assets.mixkit.co/sfx/preview/mixkit-fireworks-rocket-837.mp3" preload="auto"></audio>
+    <!-- VIDEO EMBED FRAME (we fill src dynamically in JS) -->
+    <iframe id="resultVideo" class="embedVideo"></iframe>
+    
+    <!-- RESULT MESSAGE OUTPUT -->
+    <div id="message"></div>
 
-<script src="script.js"></script>
+    <!-- COUNTDOWN -->
+    <div id="countdown" style="display:none;"></div>
+
+    <!-- START/REVEAL BUTTON -->
+    <button id="startBtn">Reveal Result</button>
+
+  </div>
 </body>
 </html>
