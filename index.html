@@ -3,31 +3,37 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Texas A&amp;M Innovation - White Elephant 2025</title>
-
-<!-- ✅ If you rename your CSS or JS files, update these names below -->
-<link rel="stylesheet" href="nfccss.css" />
-<script src="nfcgame.js" defer></script>
-
-<!-- confetti library -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<title>Texas A&M Innovation - White Elephant 2025</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <div id="main">
 
-    <!-- VIDEO EMBED FRAME (we fill src dynamically in JS) -->
-    <iframe id="resultVideo" class="embedVideo"></iframe>
-    
-    <!-- RESULT MESSAGE OUTPUT -->
-    <div id="message"></div>
+<div id="main">
 
-    <!-- COUNTDOWN -->
-    <div id="countdown" style="display:none;"></div>
+  <!-- Tag number displayed here -->
+  <div id="tagNum"></div>
 
-    <!-- START/REVEAL BUTTON -->
-    <button id="startBtn">Reveal Result</button>
+  <!-- Result icon (✔, X, !) displayed here -->
+  <div id="resultIcon"></div>
 
-  </div>
+  <!-- Result text label (WINNER, LOSER, MAJOR AWARD) -->
+  <div id="resultText"></div>
+
+  <!-- Play Video button starts video + sound -->
+  <button id="playBtn">▶ Play Video</button>
+
+  <!-- Reveal result button inserted after video begins -->
+  <div id="reveal-container"></div>
+
+</div>
+
+<!-- MP4 video element is controlled by JS -->
+<video id="video" style="display:none" playsinline>
+  <source src="" type="video/mp4">
+</video>
+
+<script src="script.js"></script>
+
 </body>
 </html>
