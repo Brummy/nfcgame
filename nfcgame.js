@@ -1,124 +1,108 @@
-/* =============================================
-   CONFIG — Change your Major Award tag here!
-============================================== */
-const winners = ["00","14","22","31"]; // 👈 EDIT winning tags here
-const MAJOR_AWARD_TAG = "99"; // 👈 Change your 1 grand prize tag here
+/* ====================================
+   🔧🔧 EDIT THESE VALUES BELOW
+====================================== */
 
-/* =============================================
-   Read Tag Number from URL
-============================================== */
+// List of "normal" winners
+const winners = ["00", "14", "22", "31"]; 
+
+// One grand prize tag (must match EXACT tag text)
+const grandPrizeTag = "40"; // <-- EDIT to choose your grand prize tag
+
+// Videos for each result.
+// To get the video ID, copy the part after `youtu.be/` or `v=` in any YouTube URL
+const videoWinnerID = "9g3--WyItKU"; // <-- EDIT to your WINNER video ID
+const videoLoserID  = "3UC96g1A4Nc"; // ✔ Current loser ID from your link — EDIT if desired
+const videoMajorID  = "OItP8-_mjXw"; // <-- EDIT to your MAJOR AWARD video ID
+
+// Sounds that play after result
+const soundWinner = "winner.mp3"; // <-- optional, leave as-is if unused
+const soundLoser  = "loser.mp3";  // <-- optional
+const soundMajor  = "major.mp3";  // <-- optional
+
+/* ====================================
+   🎯 DO NOT CHANGE BELOW THIS unless customizing behavior
+====================================== */
+
 const params = new URLSearchParams(window.location.search);
 const tag = params.get("tag");
 
-// Clean URL after reading
+// Clean the URL bar so tag doesn't show publicly
 history.replaceState({}, "", window.location.pathname);
 
-/* =============================================
-   Countdown then reveal result
-============================================== */
 document.addEventListener("DOMContentLoaded", () => {
+  const msg = document.getElementById("message");
+  const cd  = document.getElementById("countdown");
+  const vid = document.getElementById("resultVideo");
+  const btn = document.getElementById("startBtn");
 
-  const cd = document.getElementById("countdown");
-
-  // 3,2,1 countdown
-  let count = 3;
-  cd.textContent = count;
-
-  const timer = setInterval(() => {
-    count--;
-    cd.textContent = count;
-    if (count <= 0) {
-      clearInterval(timer);
-      showResult();
-    }
-  }, 1000);
-
-  function showResult() {
-    const r = document.getElementById("result");
-    const soundW = document.getElementById("sound-winner");
-    const soundF = document.getElementById("sound-fireworks");
-
-    /* ==== MAJOR AWARD CHECK FIRST ==== */
-    if (tag === MAJOR_AWARD_TAG) {
-      r.innerHTML = `
-        <div id="major">
-           <div class="symbol">!</div>
-           <div id="major-text">Major Award ✨</div>
-        </div>`;
-      launchFireworks();
-      soundF.play();
-      return;
-    }
-
-    /* ==== NORMAL WINNER ==== */
-    if (winners.includes(tag)) {
-      r.innerHTML = `
-        <div id="winner">
-           <div class="symbol">✅</div>
-           <div id="winner-text">Winner 🎉</div>
-        </div>`;
-      confetti();
-      soundW.play();
-      return;
-    }
-
-    /* ==== LOSER ==== */
-    r.innerHTML = `
-      <div id="loser">
-         <div class="symbol">X</div>
-         <div id="loser-text">Loser ❌</div>
-      </div>`;
+  if (!tag) {
+    msg.innerHTML = `<h1>No tag detected.</h1>`;
+    vid.style.display = "none";
+    btn.style.display = "none";
+    return;
   }
+
+  function playSound(file) {
+    const a = new Audio(file);
+    a.play().catch(()=>{});
+  }
+
+  function runConfetti() {
+    confetti({ particleCount: 150, spread: 160, angle: -90, origin: {x:0.5,y:0.25}});
+  }
+
+  function revealMajor() {
+    msg.innerHTML = `
+      <div class="majorAward">Major Award!</div>
+    `;
+    vid.src = `https://www.youtube.com/embed/${videoMajorID}?autoplay=1&mute=1`;
+    playSound(soundMajor);
+    setTimeout(runConfetti, 200);
+  }
+
+  function revealWinner() {
+    msg.innerHTML = `
+      <div id="winnerText">Winner!</div>
+    `;
+    vid.src = `https://www.youtube.com/embed/${videoWinnerID}?autoplay=1&mute=1`;
+    playSound(soundWinner);
+    setTimeout(runConfetti, 200);
+  }
+
+  function revealLoser() {
+    msg.innerHTML = `
+      <div class="flashingX">X</div>
+      <div id="loserText">LOSER!!</div>
+    `;
+    vid.src = `https://www.youtube.com/embed/${videoLoserID}?autoplay=1&mute=1`;
+    playSound(soundLoser);
+  }
+
+  // Start 3-2-1 countdown when Reveal button pressed
+  btn.addEventListener("click", () => {
+    btn.remove();
+    cd.style.display = "block";
+    let count = 3;
+    cd.textContent = count;
+
+    const i = setInterval(() => {
+      count--;
+      cd.textContent = count;
+      if (count === 0) {
+        clearInterval(i);
+        cd.remove();
+
+        if (tag === grandPrizeTag) {
+          revealMajor();
+        } 
+        else if (winners.includes(tag)) {
+          revealWinner();
+        } 
+        else {
+          revealLoser();
+        }
+      }
+    }, 1000);
+  });
 
 });
-
-/* =============================================
-   Fireworks burst animation
-============================================== */
-function launchFireworks() {
-  const soundFireworks = document.getElementById("sound-fireworks");
-  soundFireworks.muted = false;
-
-  // Fireworks burst using particle effect
-  for (let i = 0; i < 5; i++) {
-    setTimeout(() => {
-      fireworksBurst();
-    }, i * 600);
-  }
-}
-
-function fireworksBurst() {
-  const f = document.createElement("div");
-  f.className = "firework";
-  document.body.appendChild(f);
-  setTimeout(() => f.remove(), 1000);
-}
-
-/* =============================================
-   Particle confetti effect (no library needed)
-============================================== */
-function confetti() {
-  confetti({
-    particleCount: 200,
-    spread: 100,
-    origin: { y: 0.6 }
-  });
-}
-
-/* =============================================
-   JS CSS Firework Particles
-============================================== */
-const style = document.createElement("style");
-style.textContent = `
-.firework {
-  position: fixed;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  animation: fw 1s ease-out;
-}
-@keyframes fw {
-  0% {transform: scale(1) translateY(0); opacity: 1;}
-  100% {transform: scale(18) translateY(-300px); opacity: 0;}
-}`;
-document.head.appendChild(style);
