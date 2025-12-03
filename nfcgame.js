@@ -3,7 +3,7 @@
 ================================= */
 const winners = ["00", "14", "22", "31"]; // <- Add your winning tag numbers here
 const majorPrize = "99";                  // <- Set your ONE grand prize tag number here
-const winnerVideoID = "bfaeGKm1-wc";      // <- Replace with the video ID you want for winners
+const winnerVideoID = "9g3--WyItKU";      // <- Replace with the video ID you want for winners
 const majorVideoID  = "OItP8-_mjXw";      // <- Replace with Major Award video ID
 const loserVideoID  = "3UC96g1A4Nc";      // <- Loser video ID
 /* ================================= */
