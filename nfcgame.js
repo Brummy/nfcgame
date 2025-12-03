@@ -1,232 +1,158 @@
 /* ===============================
-   SCREEN ELEMENTS
+   CONFIGURATION (EDIT AS NEEDED)
 ================================= */
-const container = document.getElementById("main");
-const msg = document.getElementById("message");
+
+// List of winning tag numbers
+const winnerTags = ["00", "14", "22", "31"];  // <-- EDIT your winner tags here
+
+// One grand prize winner tag number
+const majorAwardTag = "40";                  // <-- EDIT your Major Award tag here
+
+// Optional YouTube video IDs if you want to use embeds later (currently unused)
+// leaving placeholders so you know where they go if you re-add embeds
+const winnerVideoID = "9g3--WyItKU";         // <-- Not used right now
+const loserVideoID  = "3UC96g1A4Nc";         // <-- Not used right now
+const awardVideoID  = "OItP8-_mjXw";         // <-- Not used right now
 
 /* ===============================
-   TAG CONFIG — EDIT THESE
+   READ TAG FROM URL
 ================================= */
-const winners = ["00", "05", "17"];      // <-- PUT ALL WINNER TAG NUMBERS HERE
-const awardTag = "99";                    // <-- YOUR SINGLE GRAND PRIZE (Major Award!) TAG
+
+// Parse tag from URL (example: yourname.github.io/nfcgame/?tag=00)
+const params = new URLSearchParams(window.location.search);
+const tag = params.get("tag");
+
+// Hide the ?tag=xx param so the URL bar stays clean
+if (tag) {
+  history.replaceState({}, "", window.location.pathname);
+}
 
 /* ===============================
-   OPTIONAL VIDEOS — EDIT IDs OR TEXT
+   CONFETTI & FIREWORK EFFECTS
 ================================= */
-// Only used when playing a video. No sound outside YouTube audio.
-const winnerVideoID = "OItP8-_mjXw";      // <-- PUT YOUR WINNER YOUTUBE VIDEO ID
-const loserVideoID = "3UC96g1A4Nc";       // <-- PUT YOUR LOSER YOUTUBE VIDEO ID
-const majorAwardVideoID = "tSv04ylc6To";  // <-- PUT YOUR MAJOR AWARD YOUTUBE VIDEO ID
+
+// Confetti for winners
+function triggerConfetti() {
+  const end = Date.now() + 3000;
+  (function frame() {
+    confetti({ particleCount: 5, spread: 50, origin: {x: 0.5, y: 0.5} });
+    if (Date.now() < end) requestAnimationFrame(frame);
+  })();
+}
+
+// Fireworks for the Major Award screen
+function triggerFireworks() {
+  const end = Date.now() + 3500;
+  (function frame() {
+    confetti({ particleCount: 9, spread: 120, startVelocity: 30, origin: {x: Math.random(), y: Math.random() - 0.2} });
+    if (Date.now() < end) requestAnimationFrame(frame);
+  })();
+}
 
 /* ===============================
-   COUNTDOWN FUNCTION (3,2,1)
+   SHOW RESULT SCREENS
 ================================= */
-function runCountdown(callback) {
+
+function showWinnerScreen(num) {
+  document.body.style.background = "#e6ffe6";
+  document.getElementById("message").innerHTML = `
+    <div class="resultTag">Number ${num}</div>
+    <div class="checkMark">✔</div>
+    <div class="winnerLabel">WINNER!!</div>
+  `;
+  triggerConfetti();
+}
+
+function showLoserScreen(num) {
+  document.body.style.background = "#ffe6e6";
+  document.getElementById("message").innerHTML = `
+    <div class="resultTag">Number ${num}</div>
+    <div class="bigX">✖</div>
+    <div class="loserLabel">LOSER!!</div>
+  `;
+}
+
+function showMajorAwardScreen(num) {
+  document.body.style.background = "#111";
+  document.getElementById("message").innerHTML = `
+    <div class="resultTag">Tag ${num}</div>
+    <div class="majorAwardBang">❗</div>
+    <div class="majorAwardText">MAJOR AWARD!!!</div>
+  `;
+  triggerFireworks();
+}
+
+/* ===============================
+   HANDLE COUNTDOWN + REVEAL FLOW
+================================= */
+
+function startCountdown(resultCallback) {
+  const messageBox = document.getElementById("message");
   let count = 3;
-  msg.innerHTML = `<div id="countdown">${count}</div>`;
-
+  messageBox.innerHTML = `<div id="countdown">${count}</div>`;
   const timer = setInterval(() => {
     count--;
     if (count > 0) {
-      msg.innerHTML = `<div id="countdown">${count}</div>`;
+      messageBox.innerHTML = `<div id="countdown">${count}</div>`;
     } else {
       clearInterval(timer);
-      callback();
+      resultCallback();
     }
-  }, 800);
+  }, 900);
 }
 
 /* ===============================
-   LOAD CONFETTI LIBRARY
-================================= */
-var confettiScript = document.createElement("script");
-confettiScript.src =
-  "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
-document.head.appendChild(confettiScript);
-
-/* ===============================
-   CONFETTI FUNCTION
-================================= */
-function runConfetti() {
-  const duration = 2500;
-  const end = Date.now() + duration;
-
-  (function frame() {
-    confetti({
-      particleCount: 7,
-      angle: Math.random() * 360,
-      spread: 60,
-      origin: { x: Math.random(), y: Math.random() - 0.2 }
-    });
-    if (Date.now() < end) requestAnimationFrame(frame);
-  })();
-}
-
-/* ===============================
-   MAJOR AWARD FIREWORKS
-================================= */
-function runFireworks() {
-  const duration = 2600;
-  const end = Date.now() + duration;
-
-  (function frame() {
-    confetti({
-      particleCount: 9,
-      spread: 150,
-      startVelocity: 30,
-      origin: { x: Math.random(), y: Math.random() - 0.3 }
-    });
-    if (Date.now() < end) requestAnimationFrame(frame);
-  })();
-}
-
-/* ===============================
-   RESULT DISPLAY BUILDERS
+   INIT PAGE STATE
 ================================= */
 
-function showWinner() {
-  msg.innerHTML = `
-    <div id="resultTag">Number ${tag}, Winner!</div>
-    <div id="resultIcon">✔</div>
-    <button id="revealBtn" style="display:none;">REVEAL RESULT</button>
-  `;
-  setTimeout(runConfetti, 400);
-  setTimeout(() => document.getElementById("revealBtn").style.display = "block", 1200);
-  setTimeout(() => document.getElementById("revealBtn").style.display = "none", 2500);
-  setTimeout(() => {
-    document.getElementById("revealBtn").style.display = "inline-block";
-    document.getElementById("revealBtn").style.pointerEvents = "auto";
-  }, 3500);
+// Make sure confetti library is loaded
+console.log("✅ NFC Game JS Loaded");
 
-  document.getElementById("revealBtn").innerHTML = `
-    <iframe
-      src="https://www.youtube.com/embed/${winnerVideoID}?autoplay=1&mute=0&playsinline=1"
-      frameborder="0"
-      allow="autoplay; encrypted-media"
-      style="width:100vw; height:45vh; border:none; border-radius:0 0 20px 20px;">
-    </iframe>
-  `;
+document.addEventListener("DOMContentLoaded", function() {
 
-  document.getElementById("revealBtn").style.display = "none";
-  setTimeout(() => document.getElementById("revealBtn").style.display = "block", 1000);
-}
+  const messageBox = document.getElementById("message");
 
-function showLoser() {
-  msg.innerHTML = `
-    <div id="resultTag">Number ${tag}, Loser!</div>
-    <div id="resultIcon" class="flashingX">X</div>
-    <div id="loserText">LOSER!!</div>
-    <button id="revealBtn" style="display:none;">REVEAL RESULT</button>
-  `;
-
-  setTimeout(() => {
-    document.getElementById("revealBtn").style.display = "inline-block";
-    document.getElementById("revealBtn").style.pointerEvents = "auto";
-  }, 2400);
-
-  document.getElementById("revealBtn").document.getElementById("revealBtn").style.display = "inline-block";
-      document.getElementById("revealBtn").style.pointerEvents = "auto";
-    document.getElementById("revealBtn").innerHTML = `
-    <iframe
-      src="https://www.youtube.com/embed/${loserVideoID}?autoplay=1&mute=0&playsinline=1"
-      frameborder="0"
-      allow="autoplay; encrypted-media"
-      style="width:100vw; height:45vh; border:none; border-radius:0 0 20px 20px;">
-    </iframe>
-  `;
-}
-
-function showMajorAward() {
-  msg.innerHTML = `
-    <div id="resultTag">Number ${tag}</div>
-    <div id="awardIcon">❗</div>
-    <div id="awardText">Major Award</div>
-    <button id="revealBtn" style="display:none;">REVEAL RESULT</button>
-  `;
-  setTimeout(runFireworks, 300);
-  setTimeout(() => document.getElementById("revealBtn").style.display = "block", 1600);
-
-  document.getElementById("revealBtn").data -> candidates: [Keyboard@1.0.6]
-  child of Arduino HID interface
-      0 -> Winner
-      String payload = record.getPayload(0), frameborder=0, z-index=2;
-       });
-document.getElementById("revealBtn").innerHTML=`
-    <iframe
-      src="https://www.youtube.com/embed/${majorAwardVideoID}?autoplay=1&mute=0&playsinline=1"
-      frameborder="0"
-      allow="autoplay; encrypted-media; picture-in-picture"
-      style="width:100vw; height:45vh; border:none; border-radius:0 0 20px 20px;">
-    </iframe>
-  `;
-}
-
-/* ===============================
-   STARTUP — READ TAG & TRIGGER FLOW
-================================= */
-const tagParams = new URLSearchParams(window.location.search);
-const tag = tagParams.get("tag");
-
-// Clean URL after scan (no tag number visible in the address bar)
-history.replaceState({}, "", window.location.pathname);
-
-// Make sure script is loading correctly
-console.log("✅ NFC game script loaded");
-
-/* ===============================
-   BUTTON-LOCKOUT PROTECTION
-================================= */
-let lastTapTime = 0;
-const lockoutMS = 1200; // prevent duplicate taps on small bogus scans
-
-function revealResult(result) {
-  const now = Date.now();
-  if (now - lastTapTime < lockoutMS) return;
-  lastTapTime = now;
-
-  document.getElementById("revealBtn").style.display = "none";
-
-  // 3,2,1 countdown, then show result
-  runCountdown(() => {
-    document.getElementById("revealBtn").style.display = "none";
-
-    // Show correct screen
-    if (result === "winner") {
-      container.innerHTML = `<iframe src="?tag=${tag}&state=winner" style="display:none;"></iframe>`;
-      showWinner();
-    }
-
-    if (result === "loser") {
-      container.innerHTML = `<iframe src="?tag=${tag}&state=loser" style="display:none;"></iframe>`;
-      showLoser();
-    }
-
-    if (result === "award") {
-      container.innerHTML = `<iframe src="?tag=${tag}&state=award" style="display:none;"></iframe>`;
-      showMajorAward();
-    }
-  });
-}
-
-/* ===============================
-   MAIN GAME DECISION + REVEAL TAP
-================================= */
-document.addEventListener("click", function() {
+  // If no tag scanned yet, show initial state & wait
   if (!tag) {
-    msg.innerHTML = "<h1>No tag detected.</h1>";
+    messageBox.innerHTML = `
+      <div class="resultTag smallTag">Tag not scanned yet...</div>
+      <button id="playVideoBtn" class="bigPlay">🎬 Play Video</button>
+    `;
     return;
   }
 
-  // Major Award gets priority
-  if (tag === awardTag) {
-    revealResult("award");
-    return;
+  // Attach functionality to "Play Video" button
+  const playBtn = document.getElementById("playVideoBtn");
+  if (playBtn) {
+    playBtn.addEventListener("click", function() {
+      document.getElementById("revealBtn").style.display = "block";
+      console.log("▶ Play Video Pressed — ready for reveal tap");
+    });
   }
 
-  // Normal tags
-  if (winners.includes(tag)) {
-    revealResult("winner");
-  } else {
-    revealResult("loser");
+/* ===============================
+   INIT REVEAL BUTTON
+================================= */
+
+document.addEventListener("DOMContentLoaded", function() {
+  const revealBtn = document.getElementById("revealBtn");
+  if (!revealBtn) {
+    console.error("❌ Reveal button not found!");
+    return;
   }
+  revealBtn.style.display = "none"; // hidden until video plays
+  revealBtn.addEventListener("click", function() {
+    startCountdown(() => {
+      // After countdown finishes, show result
+      if (tag === majorAwardTag) {
+        showMajorAwardScreen(tag);
+      } else if (winnerTags.includes(tag)) {
+        showWinnerScreen(tag);
+      } else {
+        showLoserScreen(tag);
+      }
+    });
+  });
+
+  console.log("✅ Reveal flow attached to Reveal button");
 });
