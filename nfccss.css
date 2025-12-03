@@ -9,73 +9,85 @@ body {
 }
 
 #main {
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  height:100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  width: 100vw;
 }
 
-#tagNum {
-  font-size: 3em;
-  margin-bottom:15px;
-  font-weight:900;
+#countdown {
+  font-size: 10em; /* Reduced so fits both phones and displays */
+  font-weight: 900;
+  margin-bottom: 20px;
+  animation: flash 0.6s infinite alternate;
 }
 
-/* ====== Result graphics ====== */
-#winner { color: #00ff0a; }
+#tagDisplay {
+  font-size: 3em;  /* Smaller base text for mobile */
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+/* ====== Result Icons ====== */
 .bigGreenCheck {
-  font-size: 26em;
+  font-size: 20em; /* Reduced from 26em so fits phones */
   color: #00ff0a;
-  line-height:1;
+  line-height: 1;
   animation: flash 0.6s infinite alternate;
 }
 
 .bigRedX {
-  font-size: 26em;
+  font-size: 20em;
   color: red;
-  line-height:1;
+  line-height: 1;
   animation: flash 0.4s infinite alternate;
 }
 
 .bigGoldBang {
-  font-size: 26em;
+  font-size: 18em; /* Slightly smaller so doesn't overflow on small phones */
   color: gold;
-  line-height:1;
+  line-height: 1;
   animation: flash 0.5s infinite alternate;
   text-shadow: 0 0 40px gold, 0 0 80px orange;
 }
 
-/* flashing animation */
 @keyframes flash {
-  from { opacity: 1; transform:scale(1); }
-  to   { opacity: 0.3; transform:scale(1.1); }
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0.4; transform: scale(1.1); }
 }
 
-/* Countdown timer */
-#countdown {
-  font-size: 12em;
-  font-weight:900;
-  animation: countdownPulse 0.7s infinite alternate;
-  margin:30px 0;
+/* TAMU themed banner strip */
+#tamu-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 6vh;
+  background: #500000; /* Aggie maroon */
+  z-index: 1;
+  border-bottom: 5px solid white;
 }
 
-@keyframes countdownPulse {
-  from { opacity: 1; transform:scale(1); }
-  to   { opacity: 0.5; transform:scale(1.2); }
+#resultText {
+  font-size: 4em; /* Reduced from monitor version for mobile */
+  font-weight: 900;
+  margin-top: 15px;
 }
 
-/* Reveal button */
+/* "Reveal Result" button styling AFTER video plays */
 #revealBtn {
   font-size: 4em;
-  padding:20px 40px;
-  font-weight:900;
-  background:white;
-  color:black;
-  border:none;
-  border-radius:30px;
-  cursor:pointer;
-  margin-top:30px;
-  display:inline-block;
+  padding: 15px 50px;
+  font-weight: 900;
+  background: #500000;
+  color: white;
+  border: 5px solid white;
+  border-radius: 20px;
+  cursor: pointer;
+  animation: flash 0.6s infinite alternate;
+  margin-top: 20px;
+  z-index: 2;
 }
