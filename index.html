@@ -1,31 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Texas A&M Innovation – White Elephant 2025</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Texas A&M Innovation - White Elephant 2025</title>
 
-<!-- Confetti library -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: #ffffff;
+    }
+    h1 {
+        background: #500000; /* Aggie Maroon */
+        color: white;
+        padding: 18px;
+        font-size: 22px;
+        margin: 0 0 20px 0;
+    }
+    #symbol {
+        font-size: 110px;
+        margin-top: 20px;
+    }
+    /* Flashing red X */
+    .flash {
+        color: red;
+        animation: flash 0.8s infinite;
+    }
+    @keyframes flash {
+        0% {opacity: 1;}
+        50% {opacity: 0;}
+        100% {opacity: 1;}
+    }
 
-<!-- Styles -->
-<link rel="stylesheet" href="style.css" />
+    /* Confetti (simple) */
+    .confetti {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        background-image: url('confetti.gif'); /* replace with GIF or remove */
+        background-size: cover;
+        animation: fadeIn 0.5s;
+    }
 
-<!-- Logic -->
-<script src="script.js" defer></script>
+    /* Fireworks */
+    .fireworks {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        background-image: url('fireworks.gif'); /* replace with GIF or remove */
+        background-size: cover;
+    }
+</style>
 </head>
 
 <body>
+<h1>Texas A&M Innovation - White Elephant 2025</h1>
 
-  <div id="main">
-    <!-- Countdown shows here first -->
-    <div id="countdown"></div>
+<div id="symbol"></div>
+<video id="resultVideo" width="90%" autoplay playsinline></video>
 
-    <!-- Result (Winner/Loser/Grand Prize) shows here after countdown -->
-    <div id="result"></div>
-  </div>
+<script>
+    // Parse ?result=winner/loser/grand
+    const urlParams = new URLSearchParams(window.location.search);
+    const result = urlParams.get("result");
+
+    const symbolDiv = document.getElementById("symbol");
+    const video = document.getElementById("resultVideo");
+
+    if (result === "winner") {
+        symbolDiv.textContent = "✔";
+        symbolDiv.style.color = "green";
+        video.src = "winner.mp4";  // Replace with your video
+        document.body.appendChild(Object.assign(document.createElement("div"), {className: "confetti"}));
+
+    } else if (result === "loser") {
+        symbolDiv.textContent = "✖";
+        symbolDiv.classList.add("flash");
+        video.src = "loser.mp4";  // Replace with your video
+
+    } else if (result === "grand") {
+        symbolDiv.textContent = "❗";
+        symbolDiv.style.color = "#ffaa00";
+        video.src = "grandprize.mp4";  // Replace with your video
+        document.body.appendChild(Object.assign(document.createElement("div"), {className: "fireworks"}));
+
+    } else {
+        symbolDiv.textContent = "🎁";
+        symbolDiv.style.color = "#555";
+    }
+</script>
 
 </body>
-
 </html>
