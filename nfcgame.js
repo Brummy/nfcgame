@@ -1,6 +1,7 @@
 /* =============================================
    CONFIG — Change your Major Award tag here!
 ============================================== */
+const winners = ["00","14","22","31"]; // 👈 EDIT winning tags here
 const MAJOR_AWARD_TAG = "99"; // 👈 Change your 1 grand prize tag here
 
 /* =============================================
