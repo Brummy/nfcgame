@@ -10,7 +10,7 @@ const grandPrizeTag = "40"; // <-- EDIT to choose your grand prize tag
 
 // Videos for each result.
 // To get the video ID, copy the part after `youtu.be/` or `v=` in any YouTube URL
-const videoWinnerID = "HL3JARRqGLY"; // <-- EDIT to your WINNER video ID
+const videoWinnerID = "h6yyxW5xU6A"; // <-- EDIT to your WINNER video ID
 const videoLoserID  = "3UC96g1A4Nc"; // ✔ Current loser ID from your link — EDIT if desired
 const videoMajorID  = "OItP8-_mjXw"; // <-- EDIT to your MAJOR AWARD video ID
 
