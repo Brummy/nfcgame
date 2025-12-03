@@ -55,9 +55,44 @@ body {
 }
 
 @keyframes flash {
-  from { opacity: 1; transform: scale(1); }
-  to   { opacity: 0.4; transform: scale(1.1); }
+  from { opacity: 1; }
+  to   { opacity: 0.3; }
 }
+
+.winnerLabel {
+  font-size: 3em;
+  font-weight: bold;
+  color: #6BA539; /* Aggie green-ish */
+  animation: flash 0.7s infinite alternate;
+}
+
+.loserLabel {
+  font-size: 3em;
+  font-weight: bold;
+  color: crimson;
+  animation: flash 0.4s infinite alternate;
+}
+
+.majorMark {
+  font-size: 9em;
+  font-weight: 900;
+  color: gold;
+  animation: flash 0.5s infinite alternate;
+}
+
+.checkMark {
+  font-size: 7em;
+  color: limegreen;
+  font-weight: 900;
+}
+
+.loserMark {
+  font-size: 10em;
+  font-weight: 900;
+  color: red;
+  animation: flash 0.5s infinite alternate;
+}
+
 
 /* TAMU themed banner strip */
 #tamu-banner {
