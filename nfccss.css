@@ -1,81 +1,61 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  height: 100vh;
-  background: #500000; /* TAMU maroon */
+  background: #111;
   color: white;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   overflow: hidden;
 }
 
-#main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  text-align: center;
-}
-
-/* Countdown */
 #countdown {
-  font-size: 10rem;
+  font-size: 6rem;
   font-weight: 900;
-  margin-top: 10vh;
-  animation: flash 0.6s infinite alternate;
-  color: #ffd700;
+  margin-bottom: 1rem;
 }
 
-/* Tag number display */
-#tagLabel {
-  font-size: 2.5rem;
+.symbol {
+  font-size: 14rem; 
+  line-height: 1;
+  margin: 0;
+}
+
+#winner-text, #loser-text, #major-text {
+  font-size: 4rem;
   font-weight: 900;
-  margin-top: 5vh;
+  margin-top: 1rem;
 }
 
-/* Big X for loser */
-.flashingX {
-  font-size: 18rem;
-  font-weight: 900;
-  margin: 2vh 0;
-  animation: flash 0.5s infinite alternate;
-  color: red;
-}
+/* Winner = Green Check + Flashing text */
+#winner .symbol { color: #00ff00; animation: pulse 0.4s infinite alternate; }
+#winner-text { color: #00ff00; animation: flash 0.5s infinite alternate; }
 
-/* Winner text */
-#winnerText {
-  font-size: 5rem;
-  font-weight: 900;
-  margin-top: 2vh;
-  color: #00ff00;
-}
+/* Loser = Big Red X + Flashing */
+#loser .symbol { color: red; animation: flash 0.3s infinite alternate; }
+#loser-text { color: red; animation: flash 0.5s infinite alternate; }
 
-/* Green check */
-.big-check {
-  font-size: 14rem;
-  color: #00ff00;
-  animation: flash 0.4s infinite alternate;
-}
+/* Major Award = Gold */
+#major .symbol { color: gold; animation: flash 0.5s infinite alternate; }
+#major-text { color: gold; font-size: 5rem; animation: flash 0.4s infinite alternate; }
 
-/* Loser text */
-#loserText {
-  font-size: 5rem;
-  font-weight: 900;
-  margin-top: 2vh;
-  color: red;
-  animation: flash 0.7s infinite alternate;
-}
-
-/* Major award */
-.major-award {
-  font-size: 7rem;
-  font-weight: 900;
-  margin-top: 2vh;
-  color: gold;
-  animation: flash 0.4s infinite alternate;
-}
-
+/* Simple flash animation */
 @keyframes flash {
-  from {opacity: 1;}
-  to   {opacity: 0.2;}
+  from { opacity: 1; }
+  to { opacity: 0.3; }
+}
+
+@keyframes pulse {
+  from {transform: scale(1)}
+  to {transform: scale(1.1)}
+}
+
+@keyframes pulse {
+  from { opacity: 1; }
+  to { opacity: 0.6; }
 }
