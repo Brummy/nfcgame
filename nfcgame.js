@@ -1,108 +1,116 @@
-/* ====================================
-   🔧🔧 EDIT THESE VALUES BELOW
-====================================== */
+/* ============================
+   🔧 EDIT SECTION — CHANGE THESE
+   ============================ */
 
-// List of "normal" winners
-const winners = ["00", "14", "22", "31"]; 
+// Your winning tag numbers (must match EXACT text written to the NFC tag)
+const winners = ["00", "14", "22", "31"];   // <-- EDIT your 4 normal winner tags
+const grandPrizeTag = "40";                 // <-- EDIT your one grand prize tag number
 
-// One grand prize tag (must match EXACT tag text)
-const grandPrizeTag = "40"; // <-- EDIT to choose your grand prize tag
+// YouTube Video IDs for each screen result
+const videoWinnerID = "9g3--WyItKU";        // <-- EDIT winner clip ID
+const videoLoserID  = "3UC96g1A4Nc";        // <-- EDIT loser clip ID (currently valid)
+const videoMajorID  = "OItP8-_mjXw";        // <-- EDIT major award clip ID
 
-// Videos for each result.
-// To get the video ID, copy the part after `youtu.be/` or `v=` in any YouTube URL
-const videoWinnerID = "h6yyxW5xU6A"; // <-- EDIT to your WINNER video ID
-const videoLoserID  = "3UC96g1A4Nc"; // ✔ Current loser ID from your link — EDIT if desired
-const videoMajorID  = "OItP8-_mjXw"; // <-- EDIT to your MAJOR AWARD video ID
+/* ============================
+   DO NOT CHANGE BELOW THIS LINE
+   ============================ */
 
-// Sounds that play after result
-const soundWinner = "winner.mp3"; // <-- optional, leave as-is if unused
-const soundLoser  = "loser.mp3";  // <-- optional
-const soundMajor  = "major.mp3";  // <-- optional
+const tagParam = new URLSearchParams(window.location.search).get("tag");
 
-/* ====================================
-   🎯 DO NOT CHANGE BELOW THIS unless customizing behavior
-====================================== */
-
-const params = new URLSearchParams(window.location.search);
-const tag = params.get("tag");
-
-// Clean the URL bar so tag doesn't show publicly
-history.replaceState({}, "", window.location.pathname);
+// ✅ Hide tag from URL bar so no one sees it
+if (tagParam) {
+  history.replaceState({}, "", window.location.pathname);
+} else {
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("message").style.display = "block";
+    document.getElementById("message").innerHTML = "No tag scanned yet...";
+    document.getElementById("revealBtn").style.display = "none";
+    document.getElementById("countdown").style.display = "none";
+  });
+}
 
 document.addEventListener("DOMContentLoaded", () => {
-  const msg = document.getElementById("message");
   const cd  = document.getElementById("countdown");
-  const vid = document.getElementById("resultVideo");
-  const btn = document.getElementById("startBtn");
+  const msg = document.getElementById("message");
+  const btn = document.getElementById("revealBtn");
+  const videoContainer = document.getElementById("video-container");
 
-  if (!tag) {
-    msg.innerHTML = `<h1>No tag detected.</h1>`;
-    vid.style.display = "none";
-    btn.style.display = "none";
-    return;
+  function embedVideo(videoID) {
+    videoContainer.innerHTML = `
+      <iframe width="100%" height="100%"
+      src="https://www.youtube.com/embed/${videoID}?autoplay=1&mute=1&playsinline=1"
+      frameborder="0"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowfullscreen></iframe>`;
   }
 
   function playSound(file) {
-    const a = new Audio(file);
-    a.play().catch(()=>{});
+    const sound = new Audio(file);
+    sound.play().catch(()=>{});
+  }
+
+  function playWinner() {
+    msg.innerHTML = `<div class='bigGreenCheck'>✔</div>
+                     <div id='winnerLabel'>Winner!</div>`;
+    runConfetti();
+    playSound("winner.mp3");
+    embedVideo(videoWinnerID);
+  }
+
+  function playLoser() {
+    msg.innerHTML = `<div class='bigRedX'>X</div>
+                     <div id='loserLabel'>Loser!</div>`;
+    playSound("loser.mp3");
+    embedVideo(videoLoserID);
+  }
+
+  function playMajor() {
+    msg.innerHTML = `<div class='bigGoldBang'>!</div>
+                     <div id='majorLabel'>Major Award!</div>`;
+    playFireworks();
+    playSound("major.mp3");
+    embedVideo(videoMajorID);
   }
 
   function runConfetti() {
-    confetti({ particleCount: 150, spread: 160, angle: -90, origin: {x:0.5,y:0.25}});
+    confetti({ particleCount:180, spread:170, angle:-90, origin:{x:0.5,y:0.3}});
   }
 
-  function revealMajor() {
-    msg.innerHTML = `
-      <div class="majorAward">Major Award!</div>
-    `;
-    vid.src = `https://www.youtube.com/embed/${videoMajorID}?autoplay=1&mute=1`;
-    playSound(soundMajor);
-    setTimeout(runConfetti, 200);
+  function playFireworks() {
+    const fw = Date.now() + 2200;
+    (function boom(){
+      confetti({particleCount:40, spread:110, origin:{x:Math.random(),y:Math.random()-0.1}});
+      if (Date.now() < fw) requestAnimationFrame(boom);
+    })();
   }
 
-  function revealWinner() {
-    msg.innerHTML = `
-      <div id="winnerText">Winner!</div>
-    `;
-    vid.src = `https://www.youtube.com/embed/${videoWinnerID}?autoplay=1&mute=1`;
-    playSound(soundWinner);
-    setTimeout(runConfetti, 200);
-  }
-
-  function revealLoser() {
-    msg.innerHTML = `
-      <div class="flashingX">X</div>
-      <div id="loserText">LOSER!!</div>
-    `;
-    vid.src = `https://www.youtube.com/embed/${videoLoserID}?autoplay=1&mute=1`;
-    playSound(soundLoser);
-  }
-
-  // Start 3-2-1 countdown when Reveal button pressed
+  // 👇 Countdown 3→2→1 AFTER clicking Show Result button
   btn.addEventListener("click", () => {
-    btn.remove();
+    btn.style.display = "none";
     cd.style.display = "block";
+    msg.style.display = "block";
+
     let count = 3;
     cd.textContent = count;
 
-    const i = setInterval(() => {
+    const timer = setInterval(() => {
       count--;
       cd.textContent = count;
       if (count === 0) {
-        clearInterval(i);
+        clearInterval(timer);
+        cd.style.animation = "none";
         cd.remove();
 
-        if (tag === grandPrizeTag) {
-          revealMajor();
-        } 
-        else if (winners.includes(tag)) {
-          revealWinner();
-        } 
+        if (tagParam === grandPrizeTag) {
+          playMajor();
+        }
+        else if (winners.includes(tagParam)) {
+          playWinner();
+        }
         else {
-          revealLoser();
+          playLoser();
         }
       }
     }, 1000);
   });
-
 });
