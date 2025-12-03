@@ -1,32 +1,32 @@
-/* ====== BASE PAGE LAYOUT ====== */
 body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  height: 100vh;
   background: black;
   color: white;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  height: 100vh;
 }
 
-/* ===== Video container */
-#video-container {
-  width: 100vw;
-  height: 35vh;
-  margin-bottom: 10px;
+#main {
   display:flex;
+  flex-direction:column;
   justify-content:center;
   align-items:center;
+  text-align:center;
+  height:100vh;
 }
 
-/* Winner, loser, major prize visuals centered */
+#tagNum {
+  font-size: 3em;
+  margin-bottom:15px;
+  font-weight:900;
+}
+
+/* ====== Result graphics ====== */
+#winner { color: #00ff0a; }
 .bigGreenCheck {
-  font-size: 26em;   /* massive for phones */
+  font-size: 26em;
   color: #00ff0a;
   line-height:1;
   animation: flash 0.6s infinite alternate;
@@ -44,36 +44,38 @@ body {
   color: gold;
   line-height:1;
   animation: flash 0.5s infinite alternate;
-  text-shadow: 0 0 50px gold, 0 0 90px orange;
+  text-shadow: 0 0 40px gold, 0 0 80px orange;
 }
 
-/* Flash effect for marks and text */
+/* flashing animation */
 @keyframes flash {
   from { opacity: 1; transform:scale(1); }
   to   { opacity: 0.3; transform:scale(1.1); }
 }
 
-/* Countdown 3,2,1 on screen */
+/* Countdown timer */
 #countdown {
   font-size: 12em;
   font-weight:900;
-  line-height:1;
   animation: countdownPulse 0.7s infinite alternate;
+  margin:30px 0;
 }
 
 @keyframes countdownPulse {
   from { opacity: 1; transform:scale(1); }
-  to   { opacity: 0.4; transform:scale(1.1); }
+  to   { opacity: 0.5; transform:scale(1.2); }
 }
 
-/* RESULT TEXT SIZES (WINNER / LOSER / MAJOR AWARD) */
-#winnerLabel, #loserLabel, #majorLabel {
-  font-size: 4em;  /* smaller than monitor version so fits phones */
+/* Reveal button */
+#revealBtn {
+  font-size: 4em;
+  padding:20px 40px;
   font-weight:900;
-  margin-top:25px;
-  animation: flash 0.6s infinite alternate;
+  background:white;
+  color:black;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  margin-top:30px;
+  display:inline-block;
 }
-
-#winnerLabel { color: #00ff0a; }
-#loserLabel  { color: red; }
-#majorLabel  { color: gold; }
