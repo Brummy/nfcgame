@@ -130,17 +130,22 @@ body {
 
 /* "Play Video" button */
 #playVideo {
-  font-size: 2em;
-  padding: 10px 28px;
+  position: fixed;
+  top: 6%; /* Always visible near top */
+  width: 90%; /* Wide tap area */
+  max-width: 600px;
+  font-size: 3em; /* BIG for phone screens */
+  padding: 20px 0;
   background: black;
-  color: #FFC72C;
-  border: 3px solid #FFC72C;
-  border-radius: 12px;
-  font-weight: 800;
+  color: #4CAF50; /* Green like a success button */
+  border: 5px solid #4CAF50;
+  border-radius: 20px;
+  font-weight: 900;
   cursor: pointer;
-  margin-top: 10px;
-  z-index: 55;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  z-index: 100; /* ABOVE ALL OTHER ELEMENTS */
+  text-transform: uppercase;
+  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+  pointer-events: auto; /* Ensures it can be clicked */
 }
 
 /* ===============================
@@ -154,6 +159,9 @@ body {
   height: 100vh;
   pointer-events: none;
   z-index: 30;
+}
+canvas, #confetti-canvas, #countdown {
+  pointer-events: none;
 }
 
 /* ===============================
