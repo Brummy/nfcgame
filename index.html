@@ -1,37 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Texas A&M Innovation - White Elephant 2025</title>
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
+<div id="tamu-banner"></div>
+
 <div id="main">
-
-  <!-- Tag number displayed here -->
-  <div id="tagNum"></div>
-
-  <!-- Result icon (✔, X, !) displayed here -->
+  <div id="countdown"></div>
+  <div id="tagDisplay"></div>
   <div id="resultIcon"></div>
-
-  <!-- Result text label (WINNER, LOSER, MAJOR AWARD) -->
   <div id="resultText"></div>
 
-  <!-- Play Video button starts video + sound -->
+  <!-- Play video button starts with audio -->
   <button id="playBtn">▶ Play Video</button>
 
-  <!-- Reveal result button inserted after video begins -->
+  <!-- Reveal button is injected AFTER video starts -->
   <div id="reveal-container"></div>
-
 </div>
-
-<!-- MP4 video element is controlled by JS -->
-<video id="video" style="display:none" playsinline>
-  <source src="" type="video/mp4">
-</video>
 
 <script src="script.js"></script>
 
