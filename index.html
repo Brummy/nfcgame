@@ -1,70 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Texas A&M Innovation - White Elephant 2025</title>
+  <meta charset="UTF-8" />
+  <title>NFC Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<link rel="stylesheet" href="nfccss.css">
-<script defer src="nfcgame.js"></script>
-
-<!-- Confetti Library for Winner -->
-<script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
+  <!-- Main styles -->
+  <link rel="stylesheet" href="nfccss.css" />
 </head>
 <body>
+  <div class="page">
+    <div class="content">
+      <!-- Tag number line -->
+      <div id="tag-number" class="tag-number">
+        No tag scanned yet
+      </div>
 
-<div id="main">
+      <!-- Big symbol in the center -->
+      <div id="symbol" class="symbol">
+        ?
+      </div>
 
-  <!-- Initial UI shown on page load -->
-  <div id="message">
-    <div id="tag-id-display" class="smallTag">Tag not scanned yet...</div>
-    <button id="playVideoBtn" class="bigPlay">🎬 Play Video</button>
-    <button id="revealBtn" class="reveal">Reveal Result</button>
+      <!-- Main message text -->
+      <div id="main-message" class="main-message">
+        Scan your tag
+      </div>
+
+      <!-- Mini-row (for loser x x x x ...) -->
+      <div id="mini-row" class="mini-row">
+      </div>
+    </div>
   </div>
 
-</div>
+  <!-- Confetti/fireworks library (no sound, visuals only) -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
-<script>
-  // Force Play Video button to work
-  document.getElementById("playVideoBtn").addEventListener("click", function() {
-    const winners = ["00", "14", "22", "31"];
-    const awardTag = "40"; // <-- ONE Grand Prize Tag you assign manually
-    const tagParams = new URLSearchParams(window.location.search);
-    const tag = tagParams.get("tag");
-
-    if (!tag) {
-      alert("No tag in URL. Example: /?tag=00");
-      return;
-    }
-
-    // Always show tag number
-    document.getElementById("tag-id-display").innerText = `Tag Number ${tag}`;
-
-    // Load a video (switch these IDs to your real ones)
-    let videoID = "KS5ea__5l33wWZ9w"; // <-- default video for normal tags
-    if (winners.includes(tag)) videoID = "tSv04ylc6To"; // <-- winner video ID
-    if (tag === awardTag) videoID = "OItP8-_mjXw"; // <-- major award video ID
-
-    // Inject full working YouTube embed
-    document.getElementById("main").innerHTML = `
-        <div id="videoContainer">
-          <iframe
-            id="ytplayer"
-            src="https://www.youtube.com/embed/${videoID}?autoplay=1&mute=0&playsinline=1"
-            frameborder="0"
-            allow="autoplay; encrypted-media; picture-in-picture"
-            style="width:100vw;height:56vh;border-radius:0 0 20px 20px;">
-          </iframe>
-        </div>
-    `;
-
-    // Show reveal result button after 2 seconds
-    setTimeout(() => {
-      document.getElementById("revealBtn").style.display = "block";
-    }, 2000);
-  });
-</script>
-
+  <!-- Game logic -->
+  <script src="nfcgame.js"></script>
 </body>
 </html>
