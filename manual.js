@@ -40,12 +40,18 @@ function launchFireworks() {
 
 function showWinner(tag) {
   document.body.className = "state-winner";
+
   document.getElementById("tag-number").textContent = `Tag ${tag}`;
-  document.getElementById("symbol").textContent = "✔";
+  document.getElementById("symbol").textContent = "✔";   // green check
   document.getElementById("main-message").textContent = "WINNER!";
-  document.getElementById("mini-row").innerHTML = "";
+
+  // Add the extra line for winners
+  const row = document.getElementById("mini-row");
+  row.innerHTML = `<div class="winner-subtext">FREE EXTRA STEAL</div>`;
+
   launchConfetti();
 }
+
 
 function showMajorAward(tag) {
   document.body.className = "state-major";
