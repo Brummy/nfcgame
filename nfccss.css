@@ -1,60 +1,147 @@
-body {
+/* Reset-ish */
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: Arial, sans-serif;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #1f2937, #030712);
+  color: #f9fafb;
   display: flex;
-  flex-direction: column;
-  height: 100vh;
-  background: #fdfdfd;
-  overflow: hidden;
   justify-content: center;
   align-items: center;
+}
+
+/* Overall page wrapper */
+.page {
+  width: 100%;
+  max-width: 480px; /* nice mobile size, also ok on desktop */
+  padding: 1.25rem;
+}
+
+.content {
+  border-radius: 1.5rem;
+  padding: 1.75rem 1.25rem;
+  background: rgba(15, 23, 42, 0.9);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
   text-align: center;
 }
 
-/* Tag number display before scan */
-.smallTag {
-  font-size: 1.6em; /* Phone friendly — EDIT HERE if needed */
-  font-weight: bold;
-  margin-bottom: 18px;
+/* Tag number text */
+.tag-number {
+  font-size: clamp(1.1rem, 4vw, 1.4rem);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
 }
 
-/* Play Video Button — fixed full size */
-.bigPlay {
-  font-size: 2.2em;  /* Large but fits phones — EDIT HERE */
-  width: 90vw;
-  height: 18vh;
-  max-width: 800px;
-  background: #500000;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 40px;
+/* Main big symbol in center */
+.symbol {
+  font-size: clamp(4.5rem, 18vw, 6.5rem);
+  line-height: 1;
+  margin-bottom: 1.2rem;
 }
 
-
-/* Result reveal button */
-.revealResult {
-  font-size: 2.5em; /* EDIT HERE for size */
-  padding: 30px;
-  width: 100%;
-  border-radius: 10px;
-  margin-top: 20px;
-  cursor: pointer;
+/* Main message text */
+.main-message {
+  font-size: clamp(1.6rem, 7vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1.1rem;
 }
 
-/* Winner & Loser Screens */
-#winnerScreen .check { font-size: 10em; color: green; }
-#winnerScreen .text { font-size: 2.8em; color: green; font-weight: bold; animation: flash 0.6s infinite alternate; }
+/* Mini-row for extra x's */
+.mini-row {
+  margin-top: 0.4rem;
+  min-height: 1.4rem;
+}
 
-#loserScreen .x { font-size: 10em; color: red; font-weight: bold; animation: flash 0.5s infinite alternate; }
-#loserScreen .text { font-size: 2.5em; color: red; font-weight: bold; animation: flash 0.7s infinite alternate; }
+.mini-row .mini-x {
+  display: inline-block;
+  margin: 0 0.13rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: lowercase;
+}
 
-#awardScreen .bang { font-size: 12em; color: gold; animation: flash 0.4s infinite alternate; }
-#awardScreen .text { font-size: 2.8em; color: gold; font-weight: bold; animation: flash 0.6s infinite alternate; }
+/* STATE COLORS
+   body.className is swapped in JS to these states
+*/
 
-@keyframes flash {
-  from { opacity: 1; }
-  to { opacity: 0.2; }
+/* Default / no tag */
+body.state-none .symbol {
+  color: #9ca3af;
+}
+body.state-none .main-message {
+  color: #e5e7eb;
+}
+
+/* Winner */
+body.state-winner .symbol {
+  color: #22c55e; /* green check */
+}
+body.state-winner .main-message {
+  color: #bbf7d0;
+}
+
+/* Major Award */
+body.state-major .symbol {
+  color: #fbbf24; /* gold-ish ! */
+}
+body.state-major .main-message {
+  color: #facc15;
+}
+
+/* Loser */
+body.state-loser .symbol {
+  color: #ef4444; /* red X */
+}
+body.state-loser .main-message {
+  color: #fecaca;
+}
+
+body.state-loser .mini-x {
+  color: #ef4444;
+  animation: loserBlink 0.8s infinite alternate;
+}
+
+/* flashing X's animation */
+@keyframes loserBlink {
+  0% {
+    opacity: 0.2;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+/* Small screen friendliness tweaks */
+@media (max-width: 360px) {
+  .content {
+    padding: 1.4rem 1rem;
+  }
+
+  .tag-number {
+    margin-bottom: 1.1rem;
+  }
+
+  .symbol {
+    margin-bottom: 0.9rem;
+  }
+
+  .main-message {
+    margin-bottom: 0.7rem;
+  }
 }
