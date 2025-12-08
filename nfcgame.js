@@ -5,8 +5,8 @@
 // Replace these placeholder values with the SAME numbers you used before.
 // Use zero-padded strings if your URLs are like ?tag=01, ?tag=02, etc.
 
-const MAJOR_AWARD_TAGS = ["99"]; // <-- Grand prize tag(s), e.g. ["37"]
-const WINNER_TAGS = ["01", "02", "03"]; // <-- Your 3 normal winners
+const MAJOR_AWARD_TAGS = [21]; // <-- Grand prize tag
+const WINNER_TAGS = [7, 13]; // <-- Your 2 normal winners
 // Anything not in the above lists becomes a Loser.
 
 // ===============================
