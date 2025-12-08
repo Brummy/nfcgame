@@ -1,158 +1,178 @@
-/* ===============================
-   CONFIGURATION (EDIT AS NEEDED)
-================================= */
+// ===============================
+// CONFIGURE YOUR TAG NUMBERS HERE
+// ===============================
+//
+// Replace these placeholder values with the SAME numbers you used before.
+// Use zero-padded strings if your URLs are like ?tag=01, ?tag=02, etc.
 
-// List of winning tag numbers
-const winnerTags = ["00", "14", "22", "31"];  // <-- EDIT your winner tags here
+const MAJOR_AWARD_TAGS = ["99"]; // <-- Grand prize tag(s), e.g. ["37"]
+const WINNER_TAGS = ["01", "02", "03"]; // <-- Your 3 normal winners
+// Anything not in the above lists becomes a Loser.
 
-// One grand prize winner tag number
-const majorAwardTag = "40";                  // <-- EDIT your Major Award tag here
+// ===============================
+// Utility: get tag parameter from URL
+// ===============================
+function getTagFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  let tag = params.get("tag");
 
-// Optional YouTube video IDs if you want to use embeds later (currently unused)
-// leaving placeholders so you know where they go if you re-add embeds
-const winnerVideoID = "9g3--WyItKU";         // <-- Not used right now
-const loserVideoID  = "3UC96g1A4Nc";         // <-- Not used right now
-const awardVideoID  = "OItP8-_mjXw";         // <-- Not used right now
-
-/* ===============================
-   READ TAG FROM URL
-================================= */
-
-// Parse tag from URL (example: yourname.github.io/nfcgame/?tag=00)
-const params = new URLSearchParams(window.location.search);
-const tag = params.get("tag");
-
-// Hide the ?tag=xx param so the URL bar stays clean
-if (tag) {
-  history.replaceState({}, "", window.location.pathname);
-}
-
-/* ===============================
-   CONFETTI & FIREWORK EFFECTS
-================================= */
-
-// Confetti for winners
-function triggerConfetti() {
-  const end = Date.now() + 3000;
-  (function frame() {
-    confetti({ particleCount: 5, spread: 50, origin: {x: 0.5, y: 0.5} });
-    if (Date.now() < end) requestAnimationFrame(frame);
-  })();
-}
-
-// Fireworks for the Major Award screen
-function triggerFireworks() {
-  const end = Date.now() + 3500;
-  (function frame() {
-    confetti({ particleCount: 9, spread: 120, startVelocity: 30, origin: {x: Math.random(), y: Math.random() - 0.2} });
-    if (Date.now() < end) requestAnimationFrame(frame);
-  })();
-}
-
-/* ===============================
-   SHOW RESULT SCREENS
-================================= */
-
-function showWinnerScreen(num) {
-  document.body.style.background = "#e6ffe6";
-  document.getElementById("message").innerHTML = `
-    <div class="resultTag">Number ${num}</div>
-    <div class="checkMark">✔</div>
-    <div class="winnerLabel">WINNER!!</div>
-  `;
-  triggerConfetti();
-}
-
-function showLoserScreen(num) {
-  document.body.style.background = "#ffe6e6";
-  document.getElementById("message").innerHTML = `
-    <div class="resultTag">Number ${num}</div>
-    <div class="bigX">✖</div>
-    <div class="loserLabel">LOSER!!</div>
-  `;
-}
-
-function showMajorAwardScreen(num) {
-  document.body.style.background = "#111";
-  document.getElementById("message").innerHTML = `
-    <div class="resultTag">Tag ${num}</div>
-    <div class="majorAwardBang">❗</div>
-    <div class="majorAwardText">MAJOR AWARD!!!</div>
-  `;
-  triggerFireworks();
-}
-
-/* ===============================
-   HANDLE COUNTDOWN + REVEAL FLOW
-================================= */
-
-function startCountdown(resultCallback) {
-  const messageBox = document.getElementById("message");
-  let count = 3;
-  messageBox.innerHTML = `<div id="countdown">${count}</div>`;
-  const timer = setInterval(() => {
-    count--;
-    if (count > 0) {
-      messageBox.innerHTML = `<div id="countdown">${count}</div>`;
-    } else {
-      clearInterval(timer);
-      resultCallback();
-    }
-  }, 900);
-}
-
-/* ===============================
-   INIT PAGE STATE
-================================= */
-
-// Make sure confetti library is loaded
-console.log("✅ NFC Game JS Loaded");
-
-document.addEventListener("DOMContentLoaded", function() {
-
-  const messageBox = document.getElementById("message");
-
-  // If no tag scanned yet, show initial state & wait
   if (!tag) {
-    messageBox.innerHTML = `
-      <div class="resultTag smallTag">Tag not scanned yet...</div>
-      <button id="playVideoBtn" class="bigPlay">🎬 Play Video</button>
-    `;
+    return null;
+  }
+
+  tag = tag.trim();
+
+  // Normalize to 2-digit strings if numeric
+  if (/^\d+$/.test(tag)) {
+    const num = parseInt(tag, 10);
+    if (!isNaN(num)) {
+      tag = num.toString().padStart(2, "0");
+    }
+  }
+
+  return tag;
+}
+
+// ===============================
+// Visual effects
+// ===============================
+
+// Confetti for normal winners
+function launchConfetti() {
+  if (typeof confetti !== "function") return;
+
+  const duration = 2000;
+  const end = Date.now() + duration;
+
+  (function frame() {
+    // Random sides
+    confetti({
+      particleCount: 4,
+      spread: 70,
+      origin: { x: Math.random(), y: Math.random() * 0.4 },
+    });
+
+    if (Date.now() < end) {
+      requestAnimationFrame(frame);
+    }
+  })();
+}
+
+// Fireworks-style bursts for Major Award
+function launchFireworks() {
+  if (typeof confetti !== "function") return;
+
+  const duration = 2500;
+  const end = Date.now() + duration;
+
+  (function frame() {
+    confetti({
+      particleCount: 10,
+      angle: 60,
+      spread: 55,
+      origin: { x: 0, y: 0.7 },
+    });
+    confetti({
+      particleCount: 10,
+      angle: 120,
+      spread: 55,
+      origin: { x: 1, y: 0.7 },
+    });
+
+    if (Date.now() < end) {
+      requestAnimationFrame(frame);
+    }
+  })();
+}
+
+// ===============================
+// UI update functions
+// ===============================
+function showNoTag() {
+  const tagEl = document.getElementById("tag-number");
+  const symbolEl = document.getElementById("symbol");
+  const msgEl = document.getElementById("main-message");
+  const miniRowEl = document.getElementById("mini-row");
+
+  document.body.className = "state-none";
+
+  tagEl.textContent = "No tag scanned yet";
+  symbolEl.textContent = "?";
+  msgEl.textContent = "Scan your tag";
+  miniRowEl.innerHTML = "";
+}
+
+function showWinner(tag) {
+  const tagEl = document.getElementById("tag-number");
+  const symbolEl = document.getElementById("symbol");
+  const msgEl = document.getElementById("main-message");
+  const miniRowEl = document.getElementById("mini-row");
+
+  document.body.className = "state-winner";
+
+  tagEl.textContent = `Tag ${tag}`;
+  symbolEl.textContent = "✔";
+  msgEl.textContent = "WINNER!";
+  miniRowEl.innerHTML = "";
+
+  launchConfetti();
+}
+
+function showMajorAward(tag) {
+  const tagEl = document.getElementById("tag-number");
+  const symbolEl = document.getElementById("symbol");
+  const msgEl = document.getElementById("main-message");
+  const miniRowEl = document.getElementById("mini-row");
+
+  document.body.className = "state-major";
+
+  tagEl.textContent = `Tag ${tag}`;
+  symbolEl.textContent = "!";
+  msgEl.textContent = "MAJOR AWARD!";
+  miniRowEl.innerHTML = "";
+
+  launchFireworks();
+}
+
+function showLoser(tag) {
+  const tagEl = document.getElementById("tag-number");
+  const symbolEl = document.getElementById("symbol");
+  const msgEl = document.getElementById("main-message");
+  const miniRowEl = document.getElementById("mini-row");
+
+  document.body.className = "state-loser";
+
+  tagEl.textContent = `Tag ${tag}`;
+  symbolEl.textContent = "✖";
+  msgEl.textContent = "LOSER!";
+
+  // Smaller flashing x's
+  const count = 8;
+  miniRowEl.innerHTML = "";
+  for (let i = 0; i < count; i++) {
+    const span = document.createElement("span");
+    span.textContent = "x";
+    span.className = "mini-x";
+    miniRowEl.appendChild(span);
+  }
+}
+
+// ===============================
+// Main entry
+// ===============================
+document.addEventListener("DOMContentLoaded", () => {
+  const tag = getTagFromUrl();
+
+  if (!tag) {
+    showNoTag();
     return;
   }
 
-  // Attach functionality to "Play Video" button
-  const playBtn = document.getElementById("playVideoBtn");
-  if (playBtn) {
-    playBtn.addEventListener("click", function() {
-      document.getElementById("revealBtn").style.display = "block";
-      console.log("▶ Play Video Pressed — ready for reveal tap");
-    });
+  if (MAJOR_AWARD_TAGS.includes(tag)) {
+    showMajorAward(tag);
+  } else if (WINNER_TAGS.includes(tag)) {
+    showWinner(tag);
+  } else {
+    showLoser(tag);
   }
-
-/* ===============================
-   INIT REVEAL BUTTON
-================================= */
-
-document.addEventListener("DOMContentLoaded", function() {
-  const revealBtn = document.getElementById("revealBtn");
-  if (!revealBtn) {
-    console.error("❌ Reveal button not found!");
-    return;
-  }
-  revealBtn.style.display = "none"; // hidden until video plays
-  revealBtn.addEventListener("click", function() {
-    startCountdown(() => {
-      // After countdown finishes, show result
-      if (tag === majorAwardTag) {
-        showMajorAwardScreen(tag);
-      } else if (winnerTags.includes(tag)) {
-        showWinnerScreen(tag);
-      } else {
-        showLoserScreen(tag);
-      }
-    });
-  });
-
-  console.log("✅ Reveal flow attached to Reveal button");
 });
