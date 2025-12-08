@@ -103,17 +103,15 @@ function showNoTag() {
 }
 
 function showWinner(tag) {
-  const tagEl = document.getElementById("tag-number");
-  const symbolEl = document.getElementById("symbol");
-  const msgEl = document.getElementById("main-message");
-  const miniRowEl = document.getElementById("mini-row");
-
   document.body.className = "state-winner";
 
-  tagEl.textContent = `Tag ${tag}`;
-  symbolEl.textContent = "✔";
-  msgEl.textContent = "WINNER!";
-  miniRowEl.innerHTML = "";
+  document.getElementById("tag-number").textContent = `Tag ${tag}`;
+  document.getElementById("symbol").textContent = "✔";   // green check
+  document.getElementById("main-message").textContent = "WINNER!";
+
+  // Add the extra line for winners
+  const row = document.getElementById("mini-row");
+  row.innerHTML = `<div class="winner-subtext">Winner! FREE EXTRA STEAL!</div>`;
 
   launchConfetti();
 }
