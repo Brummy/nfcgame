@@ -111,7 +111,7 @@ function showWinner(tag) {
 
   // Add the extra line for winners
   const row = document.getElementById("mini-row");
-  row.innerHTML = `<div class="winner-subtext">Winner! FREE EXTRA STEAL!</div>`;
+  row.innerHTML = `<div class="winner-subtext">FREE EXTRA STEAL!</div>`;
 
   launchConfetti();
 }
