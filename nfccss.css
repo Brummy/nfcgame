@@ -19,6 +19,14 @@ body {
   align-items: center;
 }
 
+.winner-subtext {
+  margin-top: 0.6rem;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #00cc44; /* bright winner green */
+  text-shadow: 0 0 6px rgba(0, 255, 0, 0.5);
+}
+
 /* Overall page wrapper */
 .page {
   width: 100%;
