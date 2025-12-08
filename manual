@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NFC Game – Manual Entry</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="nfccss.css" />
+</head>
+
+<body>
+  <div class="page">
+    <div class="content">
+
+      <h2 style="margin-bottom: 1rem;">Enter Tag Number</h2>
+
+      <input id="tagInput" 
+             type="number" 
+             min="0" max="99"
+             placeholder="00"
+             style="font-size:1.4rem; padding:0.4rem 1rem; width:70%; text-align:center; border-radius:0.5rem;" />
+
+      <button id="revealBtn"
+              style="margin-top:1rem; font-size:1.4rem; padding:0.4rem 1.2rem; border-radius:0.5rem;">
+        Reveal
+      </button>
+
+      <hr style="margin:1.5rem 0; opacity:0.4;">
+
+      <!-- Output area identical to index.html -->
+      <div id="tag-number" class="tag-number">Waiting...</div>
+      <div id="symbol" class="symbol">?</div>
+      <div id="main-message" class="main-message">Enter a tag</div>
+      <div id="mini-row" class="mini-row"></div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="manual.js"></script>
+</body>
+</html>
