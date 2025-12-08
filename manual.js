@@ -1,15 +1,12 @@
 // ===============================
 // CONFIGURE TAG NUMBERS
 // ===============================
-
-const MAJOR_AWARD_TAGS = ["99"];     // <-- Your grand prize tag(s)
-const WINNER_TAGS = ["01", "02", "03"]; // <-- Your 3 normal winners
+const MAJOR_AWARD_TAGS = ["99"];         // Grand prize
+const WINNER_TAGS = ["01", "02", "03"];  // Normal winners
 
 // ===============================
-// Visual effects
-// (Same as nfcgame.js)
+// Visual Effects
 // ===============================
-
 function launchConfetti() {
   const duration = 2000;
   const end = Date.now() + duration;
@@ -18,7 +15,7 @@ function launchConfetti() {
     confetti({
       particleCount: 4,
       spread: 70,
-      origin: { x: Math.random(), y: Math.random() * 0.4 },
+      origin: { x: Math.random(), y: Math.random() * 0.4 }
     });
 
     if (Date.now() < end) requestAnimationFrame(frame);
@@ -38,7 +35,7 @@ function launchFireworks() {
 }
 
 // ===============================
-// UI update functions
+// Display Functions
 // ===============================
 
 function showWinner(tag) {
@@ -76,7 +73,7 @@ function showLoser(tag) {
 }
 
 // ===============================
-// MAIN LOGIC: manual input
+// MAIN LOGIC (Manual Input Mode)
 // ===============================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -86,11 +83,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const input = document.getElementById("tagInput").value.trim();
 
     if (input === "") {
-      alert("Please enter a tag number");
+      alert("Please enter a tag number.");
       return;
     }
 
-    // normalize to 2 digits
     const tag = input.padStart(2, "0");
 
     if (MAJOR_AWARD_TAGS.includes(tag)) {
