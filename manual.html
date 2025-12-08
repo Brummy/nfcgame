@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Manual Tag Entry</title>
-<link rel="stylesheet" href="nfccss.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFC Game Manual Entry</title>
+    <link rel="stylesheet" href="nfccss.css">
 </head>
 <body>
 
-<div id="container">
-    <h2>Enter Tag Number</h2>
+<div id="main">
+    <div class="card">
 
-    <input id="tagInput" type="number" inputmode="numeric" min="0" placeholder="Enter tag…" />
+        <h1 class="title">Enter Tag Number</h1>
 
-    <button id="revealBtn">Reveal</button>
+        <input type="number" id="manualInput" placeholder="Tag Number" min="0">
 
-    <div id="tag-number"></div>
-    <div id="symbol"></div>
-    <div id="main-message"></div>
-    <div id="mini-row"></div>
+        <button id="revealBtn">Reveal Result</button>
+
+        <div id="resultArea"></div>
+
+    </div>
 </div>
 
+<!-- Effects canvases -->
+<canvas id="confetti-canvas"></canvas>
+<canvas id="fireworks-canvas"></canvas>
+
+<script src="confetti.browser.min.js"></script>
+<script src="fireworks.min.js"></script>
 <script src="manual.js"></script>
+
 </body>
 </html>
+
