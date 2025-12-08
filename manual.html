@@ -1,53 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>NFC Game – Manual Entry</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="nfccss.css" />
-
-  <style>
-    /* Remove number input arrows on mobile & desktop */
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-    input[type="number"] {
-      appearance: textfield;
-      -moz-appearance: textfield;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual Tag Entry</title>
+<link rel="stylesheet" href="nfccss.css">
 </head>
-
 <body>
-  <div class="page">
-    <div class="content">
 
-      <h2 style="margin-bottom: 1rem;">Enter Tag Number</h2>
+<div id="container">
+    <h2>Enter Tag Number</h2>
 
-      <input id="tagInput"
-             type="number"
-             placeholder="Enter tag"
-             style="font-size:1.4rem; padding:0.6rem 1rem; width:70%; text-align:center; border-radius:0.5rem;" />
+    <input id="tagInput" type="number" inputmode="numeric" min="0" placeholder="Enter tag…" />
 
-      <button id="revealBtn"
-              style="margin-top:1rem; font-size:1.4rem; padding:0.6rem 1.2rem; border-radius:0.5rem;">
-        Reveal
-      </button>
+    <button id="revealBtn">Reveal</button>
 
-      <hr style="margin:1.5rem 0; opacity:0.4;">
+    <div id="tag-number"></div>
+    <div id="symbol"></div>
+    <div id="main-message"></div>
+    <div id="mini-row"></div>
+</div>
 
-      <!-- Output (empty until reveal is pressed) -->
-      <div id="tag-number" class="tag-number"></div>
-      <div id="symbol" class="symbol"></div>
-      <div id="main-message" class="main-message"></div>
-      <div id="mini-row" class="mini-row"></div>
-
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-  <script src="manual.js"></script>
+<script src="manual.js"></script>
 </body>
 </html>
