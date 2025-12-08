@@ -1,8 +1,8 @@
 // ===============================
 // CONFIGURE TAG NUMBERS
 // ===============================
-const MAJOR_AWARD_TAGS = ["99"];         // Grand prize
-const WINNER_TAGS = ["01", "02", "03"];  // Normal winners
+const MAJOR_AWARD_TAGS = [21];         // Grand prize
+const WINNER_TAGS = [7, 13];  // Normal winners
 
 // ===============================
 // Visual Effects
