@@ -1,114 +1,139 @@
+/* General Page Layout */
 body {
     margin: 0;
     padding: 0;
-    background: black;
-    color: white;
+    background: #fafafa;
     font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#main {
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
+}
+
+/* Card Container */
+.card {
     text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 0 14px rgba(0,0,0,0.15);
 }
 
-#container {
-    margin-top: 8vh;
-    padding: 10px;
+/* Title */
+.title {
+    margin-top: 0;
+    font-size: 1.7rem;
 }
 
-#tag-number {
-    font-size: 6vw;
-    margin-bottom: 3vh;
-    font-weight: bold;
-}
-
-#symbol {
-    font-size: 25vw;
-    line-height: 1;
-}
-
-#main-message {
-    margin-top: 2vh;
-    font-size: 10vw;
-    font-weight: bold;
-}
-
-#mini-row {
-    margin-top: 2vh;
-    font-size: 6vw;
-}
-
-/* Winner */
-.state-winner #symbol {
-    color: #00ff55;
-    animation: pulse 1s infinite;
-}
-
-.winner-subtext {
-    color: #00ff55;
-    font-weight: bold;
-}
-
-/* Loser */
-.state-loser #symbol {
-    color: red;
-    animation: pulse 1s infinite;
-}
-
-.loser-x {
-    color: red;
-    font-size: 6vw;
-    animation: blink 0.6s infinite;
-}
-
-/* Major Award */
-.state-major #symbol {
-    color: gold;
-    animation: pulse 1s infinite;
-}
-
-.major-sub {
-    color: gold;
-    animation: blink 1s infinite;
-    font-size: 8vw;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.18); }
-    100% { transform: scale(1); }
-}
-
-@keyframes blink {
-    0% { opacity: 1; }
-    50% { opacity: 0.2; }
-    100% { opacity: 1; }
-}
-
-input {
-    font-size: 6vw;
-    padding: 1vh;
-    width: 60vw;
+/* Number Input */
+#manualInput {
+    width: 100%;
+    font-size: 2rem;
+    padding: 12px;
+    margin: 20px 0;
     text-align: center;
-    border-radius: 12px;
-    border: none;
+    border-radius: 10px;
+    border: 2px solid #ccc;
     outline: none;
 }
 
-button {
-    margin-top: 3vh;
-    padding: 2vh 5vh;
-    font-size: 6vw;
-    border-radius: 12px;
-    border: none;
-    background-color: #444;
-    color: white;
-
-/* Remove number input spinners on all browsers */
+/* Remove number spinners */
 input[type="number"] {
     -moz-appearance: textfield;
 }
-
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
+/* Reveal Button */
+#revealBtn {
+    width: 100%;
+    padding: 15px;
+    background: maroon;
+    color: white;
+    font-size: 1.4rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+#revealBtn:hover {
+    background: #6b0000;
+}
+
+/* RESULT AREA */
+#resultArea {
+    margin-top: 25px;
+}
+
+/* Winner */
+.big-check {
+    font-size: 6rem;
+    color: green;
+}
+.winner-text {
+    font-size: 2.2rem;
+    margin-top: 10px;
+    color: green;
+    font-weight: bold;
+}
+.free-steal {
+    font-size: 1.8rem;
+    margin-top: 5px;
+    color: green;
+}
+
+/* Loser */
+.big-x {
+    font-size: 6rem;
+    color: red;
+    animation: flash 0.7s infinite alternate;
+}
+.small-x {
+    font-size: 2rem;
+    color: red;
+    animation: flash 0.6s infinite alternate;
+}
+.loser-text {
+    font-size: 2rem;
+    margin-top: 10px;
+    color: red;
+    font-weight: bold;
+}
+
+/* Major Award */
+.big-exclaim {
+    font-size: 6rem;
+    color: gold;
+    animation: flash 0.6s infinite alternate;
+}
+.major-text {
+    font-size: 2.4rem;
+    margin-top: 10px;
+    color: goldenrod;
+    font-weight: bold;
+    animation: flash 0.7s infinite alternate;
+}
+
+@keyframes flash {
+    from { opacity: 1; }
+    to { opacity: 0.25; }
+}
+
+/* Effects canvases */
+#confetti-canvas,
+#fireworks-canvas {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
 }
