@@ -1,155 +1,102 @@
-/* Reset-ish */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html,
 body {
-  height: 100%;
+    margin: 0;
+    padding: 0;
+    background: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
 }
 
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: radial-gradient(circle at top, #1f2937, #030712);
-  color: #f9fafb;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+#container {
+    margin-top: 8vh;
+    padding: 10px;
 }
 
-.winner-subtext {
-  margin-top: 0.6rem;
-  font-size: 1.6rem;
-  font-weight: bold;
-  color: #00cc44; /* bright winner green */
-  text-shadow: 0 0 6px rgba(0, 255, 0, 0.5);
+#tag-number {
+    font-size: 6vw;
+    margin-bottom: 3vh;
+    font-weight: bold;
 }
 
-/* Overall page wrapper */
-.page {
-  width: 100%;
-  max-width: 480px; /* nice mobile size, also ok on desktop */
-  padding: 1.25rem;
+#symbol {
+    font-size: 25vw;
+    line-height: 1;
 }
 
-.content {
-  border-radius: 1.5rem;
-  padding: 1.75rem 1.25rem;
-  background: rgba(15, 23, 42, 0.9);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
-  text-align: center;
+#main-message {
+    margin-top: 2vh;
+    font-size: 10vw;
+    font-weight: bold;
 }
 
-/* Tag number text */
-.tag-number {
-  font-size: clamp(1.1rem, 4vw, 1.4rem);
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  opacity: 0.9;
-}
-
-/* Main big symbol in center */
-.symbol {
-  font-size: clamp(4.5rem, 18vw, 6.5rem);
-  line-height: 1;
-  margin-bottom: 1.2rem;
-}
-
-/* Main message text */
-.main-message {
-  font-size: clamp(1.6rem, 7vw, 2.2rem);
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 1.1rem;
-}
-
-/* Mini-row for extra x's */
-.mini-row {
-  margin-top: 0.4rem;
-  min-height: 1.4rem;
-}
-
-.mini-row .mini-x {
-  display: inline-block;
-  margin: 0 0.13rem;
-  font-size: 1.1rem;
-  font-weight: 700;
-  text-transform: lowercase;
-}
-
-/* STATE COLORS
-   body.className is swapped in JS to these states
-*/
-
-/* Default / no tag */
-body.state-none .symbol {
-  color: #9ca3af;
-}
-body.state-none .main-message {
-  color: #e5e7eb;
+#mini-row {
+    margin-top: 2vh;
+    font-size: 6vw;
 }
 
 /* Winner */
-body.state-winner .symbol {
-  color: #22c55e; /* green check */
-}
-body.state-winner .main-message {
-  color: #bbf7d0;
+.state-winner #symbol {
+    color: #00ff55;
+    animation: pulse 1s infinite;
 }
 
-/* Major Award */
-body.state-major .symbol {
-  color: #fbbf24; /* gold-ish ! */
-}
-body.state-major .main-message {
-  color: #facc15;
+.winner-subtext {
+    color: #00ff55;
+    font-weight: bold;
 }
 
 /* Loser */
-body.state-loser .symbol {
-  color: #ef4444; /* red X */
-}
-body.state-loser .main-message {
-  color: #fecaca;
+.state-loser #symbol {
+    color: red;
+    animation: pulse 1s infinite;
 }
 
-body.state-loser .mini-x {
-  color: #ef4444;
-  animation: loserBlink 0.8s infinite alternate;
+.loser-x {
+    color: red;
+    font-size: 6vw;
+    animation: blink 0.6s infinite;
 }
 
-/* flashing X's animation */
-@keyframes loserBlink {
-  0% {
-    opacity: 0.2;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(-2px);
-  }
+/* Major Award */
+.state-major #symbol {
+    color: gold;
+    animation: pulse 1s infinite;
 }
 
-/* Small screen friendliness tweaks */
-@media (max-width: 360px) {
-  .content {
-    padding: 1.4rem 1rem;
-  }
+.major-sub {
+    color: gold;
+    animation: blink 1s infinite;
+    font-size: 8vw;
+}
 
-  .tag-number {
-    margin-bottom: 1.1rem;
-  }
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.18); }
+    100% { transform: scale(1); }
+}
 
-  .symbol {
-    margin-bottom: 0.9rem;
-  }
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.2; }
+    100% { opacity: 1; }
+}
 
-  .main-message {
-    margin-bottom: 0.7rem;
-  }
+input {
+    font-size: 6vw;
+    padding: 1vh;
+    width: 60vw;
+    text-align: center;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+}
+
+button {
+    margin-top: 3vh;
+    padding: 2vh 5vh;
+    font-size: 6vw;
+    border-radius: 12px;
+    border: none;
+    background-color: #444;
+    color: white;
 }
