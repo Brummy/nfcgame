@@ -53,9 +53,9 @@ if (!tag) {
     if (tagNum === majorAward) {
         resultArea.innerHTML = `
             <div class="big-exclaim">!</div>
-            <div class="major-text">Major Award!<br><small>Tag ${tagNum}</small></div>
-        `;
-        runFireworks = fireworksBurst;
+            <div class="major-text">Major Award!<br><small>Tag ${tagNum}</small></div>;
+        runFireworks();
+
     }
 
     /* Winner */
