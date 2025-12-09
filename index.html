@@ -3,48 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NFC Game</title>
-    <link rel="stylesheet" href="nfccss.css">
+    <title>NFC Reveal</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Confetti library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
-<div id="main">
-    <div id="resultArea">
-        <p>Scan your tag…</p>
+    <div class="container">
+        <h1 class="page-title">NFC Result</h1>
+        <div id="resultArea" class="result-box">
+            <p>No tag scanned yet…</p>
+        </div>
+
+        <a class="manual-link" href="manual.html">Enter Tag Manually</a>
     </div>
-</div>
 
-<!-- Effect canvases -->
-<canvas id="confetti-canvas"></canvas>
-<canvas id="fireworks-canvas"></canvas>
-
-<!-- Confetti CDN -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-<!-- Fireworks CDN (uses confetti internally) -->
-<script>
-/* Simple fireworks routine */
-function fireworksBurst() {
-    let count = 0;
-    const interval = setInterval(() => {
-        confetti({
-            particleCount: 80,
-            spread: 140,
-            startVelocity: 45,
-            origin: {
-                x: Math.random(),
-                y: Math.random() * 0.3
-            }
-        });
-        count++;
-        if (count >= 10) clearInterval(interval);
-    }, 250);
-}
-</script>
-
-
-<!-- NFC Logic -->
-<script src="nfcgame.js"></script>
-
+    <script src="nfc.js"></script>
 </body>
 </html>
