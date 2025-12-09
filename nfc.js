@@ -15,20 +15,16 @@ if (tag !== null) {
 
 const resultArea = document.getElementById("resultArea");
 
-/* ---------------------------------------
-   CONFETTI (for Winners)
----------------------------------------- */
+/* Confetti */
 function runConfetti() {
     confetti({
         particleCount: 200,
-        spread: 90,
+        spread: 80,
         origin: { y: 0.6 }
     });
 }
 
-/* ---------------------------------------
-   FIREWORKS (for Major Award)
----------------------------------------- */
+/* Fireworks for major award */
 function runFireworks() {
     let count = 0;
     const interval = setInterval(() => {
@@ -46,20 +42,16 @@ function runFireworks() {
     }, 300);
 }
 
-/* ---------------------------------------
-   IF NO TAG PROVIDED YET
----------------------------------------- */
+/* If no tag given */
 if (!tag || isNaN(tag)) {
     resultArea.innerHTML = "<p>No tag scanned yet…</p>";
 }
 
-/* ---------------------------------------
-   TAG PRESENT → DETERMINE OUTCOME
----------------------------------------- */
+/* Process tag */
 else {
     const tagNum = parseInt(tag);
 
-    /* ---- MAJOR AWARD ---- */
+    /* Major Award */
     if (tagNum === majorAward) {
         resultArea.innerHTML = `
             <div class="big-exclaim">!</div>
@@ -68,10 +60,10 @@ else {
                 <small>Tag ${tagNum}</small>
             </div>
         `;
-        runFireworks();   // <-- FIXED: properly CALL function
+        runFireworks();
     }
 
-    /* ---- WINNER ---- */
+    /* Winners */
     else if (winners.includes(tagNum)) {
         resultArea.innerHTML = `
             <div class="big-check">✔</div>
@@ -84,7 +76,7 @@ else {
         runConfetti();
     }
 
-    /* ---- LOSER ---- */
+    /* Losers */
     else {
         resultArea.innerHTML = `
             <div class="big-x">X</div>
