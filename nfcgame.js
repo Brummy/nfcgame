@@ -15,7 +15,9 @@ if (tag !== null) {
 
 const resultArea = document.getElementById("resultArea");
 
-/* Confetti for winners */
+/* ---------------------------------------
+   CONFETTI (for Winners)
+---------------------------------------- */
 function runConfetti() {
     confetti({
         particleCount: 200,
@@ -24,7 +26,9 @@ function runConfetti() {
     });
 }
 
-/* Fireworks for major award */
+/* ---------------------------------------
+   FIREWORKS (for Major Award)
+---------------------------------------- */
 function runFireworks() {
     let count = 0;
     const interval = setInterval(() => {
@@ -42,37 +46,52 @@ function runFireworks() {
     }, 300);
 }
 
-/* If no tag provided */
-if (!tag) {
+/* ---------------------------------------
+   IF NO TAG PROVIDED YET
+---------------------------------------- */
+if (!tag || isNaN(tag)) {
     resultArea.innerHTML = "<p>No tag scanned yet…</p>";
-} else {
+}
 
+/* ---------------------------------------
+   TAG PRESENT → DETERMINE OUTCOME
+---------------------------------------- */
+else {
     const tagNum = parseInt(tag);
 
-    /* Major Award */
+    /* ---- MAJOR AWARD ---- */
     if (tagNum === majorAward) {
         resultArea.innerHTML = `
             <div class="big-exclaim">!</div>
-            <div class="major-text">Major Award!<br><small>Tag ${tagNum}</small></div>;
-        runFireworks();
-
+            <div class="major-text">
+                Major Award!<br>
+                <small>Tag ${tagNum}</small>
+            </div>
+        `;
+        runFireworks();   // <-- FIXED: properly CALL function
     }
 
-    /* Winner */
+    /* ---- WINNER ---- */
     else if (winners.includes(tagNum)) {
         resultArea.innerHTML = `
             <div class="big-check">✔</div>
-            <div class="winner-text">Winner!<br><small>Tag ${tagNum}</small></div>
+            <div class="winner-text">
+                Winner!<br>
+                <small>Tag ${tagNum}</small>
+            </div>
             <div class="free-steal">Free Extra Steal!</div>
         `;
         runConfetti();
     }
 
-    /* Loser */
+    /* ---- LOSER ---- */
     else {
         resultArea.innerHTML = `
             <div class="big-x">X</div>
-            <div class="loser-text">Loser!<br><small>Tag ${tagNum}</small></div>
+            <div class="loser-text">
+                Loser!<br>
+                <small>Tag ${tagNum}</small>
+            </div>
             <div class="small-x">x x x</div>
         `;
     }
