@@ -12,33 +12,17 @@ body {
     margin: auto;
 }
 
+/* Result display styling */
 .result-box {
     padding: 25px;
     border-radius: 12px;
     min-height: 260px;
 }
 
+/* WINNER — green check */
 .big-check {
     font-size: 6rem;
     color: green;
-    animation: pulse 1s infinite alternate;
-}
-
-.big-x {
-    font-size: 6rem;
-    color: red;
-    animation: flash 0.6s infinite alternate;
-}
-
-.small-x {
-    font-size: 2rem;
-    color: red;
-    animation: flash 0.8s infinite alternate;
-}
-
-.big-exclaim {
-    font-size: 6.5rem;
-    color: gold;
     animation: pulse 1s infinite alternate;
 }
 
@@ -54,10 +38,30 @@ body {
     color: green;
 }
 
+/* LOSER — flashing X */
+.big-x {
+    font-size: 6rem;
+    color: red;
+    animation: flash 0.6s infinite alternate;
+}
+
+.small-x {
+    font-size: 2rem;
+    color: red;
+    animation: flash 0.8s infinite alternate;
+}
+
 .loser-text {
     color: red;
     font-size: 2.2rem;
     margin-top: 10px;
+}
+
+/* MAJOR AWARD — gold ! */
+.big-exclaim {
+    font-size: 6.5rem;
+    color: gold;
+    animation: pulse 1s infinite alternate;
 }
 
 .major-text {
@@ -66,19 +70,28 @@ body {
     margin-top: 10px;
 }
 
+/* INPUT for manual mode */
 .tag-input {
     width: 80%;
     padding: 15px;
     font-size: 1.5rem;
     margin-bottom: 15px;
+    border-radius: 8px;
+    border: none;
 }
 
+/* Button */
 .reveal-btn {
     padding: 15px 20px;
     font-size: 1.3rem;
     margin-bottom: 20px;
+    border-radius: 8px;
+    border: none;
+    background: #444;
+    color: white;
 }
 
+/* Animations */
 @keyframes flash {
     from { opacity: 1; }
     to { opacity: 0.2; }
@@ -87,15 +100,18 @@ body {
 @keyframes pulse {
     from { transform: scale(1); opacity: 0.9; }
     to { transform: scale(1.2); opacity: 1; }
+}
 
-    /* Remove number input spinners on Chrome, Edge, Safari */
+/* === Remove number spinner controls (desktop + mobile) === */
+
+/* Chrome, Edge, Safari */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-/* Remove number input spinners on Firefox */
+/* Firefox */
 input[type="number"] {
     -moz-appearance: textfield;
 }
