@@ -12,13 +12,12 @@
 <body>
 
 <div class="container">
-    <h1 class="page-title">Enter Tag Number</h1>
 
     <input 
         id="tagInput"
         type="number"
         inputmode="numeric"
-        placeholder="Enter Tag #"
+        placeholder="Enter Tag Number"
         class="tag-input"
     >
 
@@ -26,7 +25,6 @@
 
     <div id="manualResult" class="result-box"></div>
 
-    <a class="manual-link" href="index.html">Scan NFC Instead</a>
 </div>
 
 <script>
@@ -49,16 +47,16 @@ function runFireworks() {
     const interval = setInterval(() => {
         confetti({
             particleCount: 80,
-            spread: 120,
-            startVelocity: 60,
+            spread: 140,
+            startVelocity: 65,
             origin: {
                 x: Math.random(),
                 y: Math.random() * 0.4
             }
         });
         count++;
-        if (count > 10) clearInterval(interval);
-    }, 300);
+        if (count > 12) clearInterval(interval);
+    }, 250);
 }
 
 revealBtn.addEventListener("click", () => {
@@ -71,7 +69,6 @@ revealBtn.addEventListener("click", () => {
 
     const tagNum = parseInt(tagValue);
 
-    /* Major Award */
     if (tagNum === majorAward) {
         resultBox.innerHTML = `
             <div class="big-exclaim">!</div>
@@ -82,8 +79,6 @@ revealBtn.addEventListener("click", () => {
         `;
         runFireworks();
     }
-
-    /* Winner */
     else if (winners.includes(tagNum)) {
         resultBox.innerHTML = `
             <div class="big-check">✔</div>
@@ -95,8 +90,6 @@ revealBtn.addEventListener("click", () => {
         `;
         runConfetti();
     }
-
-    /* Loser */
     else {
         resultBox.innerHTML = `
             <div class="big-x">X</div>
