@@ -4,54 +4,44 @@ const winners = [7, 13];
 /* MAJOR AWARD TAG */
 const majorAward = 21;
 
-/* Extract tag number from URL */
+/* Extract tag number */
 const params = new URLSearchParams(window.location.search);
 let tag = params.get("tag");
 
-/* Remove leading zeros */
-if (tag !== null) {
-    tag = String(parseInt(tag));
-}
+if (tag !== null) tag = String(parseInt(tag));
 
 const resultArea = document.getElementById("resultArea");
 
-/* Confetti */
 function runConfetti() {
     confetti({
         particleCount: 200,
-        spread: 80,
+        spread: 90,
         origin: { y: 0.6 }
     });
 }
 
-/* Fireworks for major award */
 function runFireworks() {
     let count = 0;
     const interval = setInterval(() => {
         confetti({
             particleCount: 80,
-            spread: 120,
-            startVelocity: 60,
+            spread: 140,
+            startVelocity: 65,
             origin: {
                 x: Math.random(),
                 y: Math.random() * 0.4
             }
         });
         count++;
-        if (count > 10) clearInterval(interval);
-    }, 300);
+        if (count > 12) clearInterval(interval);
+    }, 250);
 }
 
-/* If no tag given */
-if (!tag || isNaN(tag)) {
-    resultArea.innerHTML = "<p>No tag scanned yet…</p>";
-}
+/* Only draw something if tag is present */
+if (tag && !isNaN(tag)) {
 
-/* Process tag */
-else {
     const tagNum = parseInt(tag);
 
-    /* Major Award */
     if (tagNum === majorAward) {
         resultArea.innerHTML = `
             <div class="big-exclaim">!</div>
@@ -63,7 +53,6 @@ else {
         runFireworks();
     }
 
-    /* Winners */
     else if (winners.includes(tagNum)) {
         resultArea.innerHTML = `
             <div class="big-check">✔</div>
@@ -76,7 +65,6 @@ else {
         runConfetti();
     }
 
-    /* Losers */
     else {
         resultArea.innerHTML = `
             <div class="big-x">X</div>
