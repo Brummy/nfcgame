@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NFC Reveal</title>
-<link rel="stylesheet" href="nfccss.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFC Game</title>
+    <link rel="stylesheet" href="nfccss.css">
 </head>
 <body>
 
-<div id="container">
-    <div id="tag-number"></div>
-    <div id="symbol"></div>
-    <div id="main-message"></div>
-    <div id="mini-row"></div>
+<div id="main">
+    <div id="resultArea">
+        <p>Scan your tag…</p>
+    </div>
 </div>
 
+<!-- Effect canvases -->
+<canvas id="confetti-canvas"></canvas>
+<canvas id="fireworks-canvas"></canvas>
+
+<!-- Libraries -->
+<script src="confetti.browser.min.js"></script>
+<script src="fireworks.min.js"></script>
+
+<!-- NFC Logic -->
 <script src="nfcgame.js"></script>
+
 </body>
 </html>
