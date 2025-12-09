@@ -1,7 +1,8 @@
 body {
+    background: black;
+    color: white;
     font-family: Arial, sans-serif;
     text-align: center;
-    background: white;
     margin: 0;
     padding: 20px;
 }
@@ -11,28 +12,20 @@ body {
     margin: auto;
 }
 
-.page-title {
-    font-size: 2rem;
-    margin-bottom: 20px;
-}
-
 .result-box {
     padding: 25px;
     border-radius: 12px;
-    min-height: 220px;
-    background: #f7f7f7;
-    box-shadow: 0px 0px 10px #d0d0d0;
-    margin-bottom: 30px;
+    min-height: 260px;
 }
 
 .big-check {
-    font-size: 5rem;
+    font-size: 6rem;
     color: green;
     animation: pulse 1s infinite alternate;
 }
 
 .big-x {
-    font-size: 5rem;
+    font-size: 6rem;
     color: red;
     animation: flash 0.6s infinite alternate;
 }
@@ -44,41 +37,33 @@ body {
 }
 
 .big-exclaim {
-    font-size: 6rem;
-    color: goldenrod;
+    font-size: 6.5rem;
+    color: gold;
     animation: pulse 1s infinite alternate;
 }
 
 .winner-text {
-    font-size: 2rem;
-    margin-top: 10px;
     color: green;
+    font-size: 2.2rem;
+    margin-top: 10px;
 }
 
 .free-steal {
-    margin-top: 8px;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+    margin-top: 5px;
     color: green;
-    font-weight: bold;
 }
 
 .loser-text {
-    font-size: 2rem;
-    margin-top: 10px;
     color: red;
+    font-size: 2.2rem;
+    margin-top: 10px;
 }
 
 .major-text {
-    font-size: 2rem;
+    color: gold;
+    font-size: 2.2rem;
     margin-top: 10px;
-    color: goldenrod;
-}
-
-.manual-link {
-    display: block;
-    margin-top: 20px;
-    font-size: 1.2rem;
-    color: blue;
 }
 
 .tag-input {
@@ -91,6 +76,7 @@ body {
 .reveal-btn {
     padding: 15px 20px;
     font-size: 1.3rem;
+    margin-bottom: 20px;
 }
 
 @keyframes flash {
