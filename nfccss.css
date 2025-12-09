@@ -1,4 +1,4 @@
-/* General Page Layout */
+/* General Layout */
 body {
     margin: 0;
     padding: 0;
@@ -16,61 +16,10 @@ body {
     padding: 20px;
 }
 
-/* Card Container */
-.card {
-    text-align: center;
-    background: white;
-    padding: 20px;
-    border-radius: 14px;
-    box-shadow: 0 0 14px rgba(0,0,0,0.15);
-}
-
-/* Title */
-.title {
-    margin-top: 0;
-    font-size: 1.7rem;
-}
-
-/* Number Input */
-#manualInput {
-    width: 100%;
-    font-size: 2rem;
-    padding: 12px;
-    margin: 20px 0;
-    text-align: center;
-    border-radius: 10px;
-    border: 2px solid #ccc;
-    outline: none;
-}
-
-/* Remove number spinners */
-input[type="number"] {
-    -moz-appearance: textfield;
-}
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Reveal Button */
-#revealBtn {
-    width: 100%;
-    padding: 15px;
-    background: maroon;
-    color: white;
-    font-size: 1.4rem;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-}
-#revealBtn:hover {
-    background: #6b0000;
-}
-
-/* RESULT AREA */
 #resultArea {
-    margin-top: 25px;
+    text-align: center;
+    font-size: 1.6rem;
+    line-height: 1.4;
 }
 
 /* Winner */
@@ -99,6 +48,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .small-x {
     font-size: 2rem;
     color: red;
+    margin-top: 5px;
     animation: flash 0.6s infinite alternate;
 }
 .loser-text {
@@ -127,7 +77,7 @@ input[type="number"]::-webkit-outer-spin-button {
     to { opacity: 0.25; }
 }
 
-/* Effects canvases */
+/* Effect canvases */
 #confetti-canvas,
 #fireworks-canvas {
     position: fixed;
